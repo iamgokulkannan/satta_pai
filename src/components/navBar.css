@@ -1,0 +1,83 @@
+/* navBar.css */
+@font-face {
+  font-family: 'chisato';
+  src: url('../../../chisato/chisato.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.navbar {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  color: white;
+  background: linear-gradient(to bottom, rgb(36, 36, 36), rgba(0, 0, 0, 0.7));
+  transition: transform 0.4s ease-in-out;
+  transform: translateY(-100%);
+  z-index: 1000; /* Ensure the navbar is above other content */
+}
+
+.navbar.visible {
+  transform: translateY(0);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center; /* Align items vertically centered */
+}
+
+.nav-text {
+  font-family: chisato;
+  font-size: 1.5rem; /* Ensure this matches the .contact-us size */
+  font-weight: bold; /* Optional: to match the weight */
+}
+
+.nav-text:hover,
+.logo:hover {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Keep text color as is */
+}
+
+.logo-link, .nav-text-link {
+  display: inline-block; /* Ensure proper click area */
+}
+
+.logo-link:hover, .nav-text-link:hover {
+  cursor: pointer; /* Show pointer when hovered */
+}
+
+.contact-us,
+.plus-contact-us {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem; /* Adjust the size as needed */
+  margin-left: auto; /* Push "Contact Us" to the right */
+  position: absolute;
+  left: 30px;
+  top: 28px;
+}
+
+.contact-us {
+  left: 48px;
+}
+
+.plus-contact-us {
+  display: inline-block;
+  transition: transform 0.3s ease-in-out; /* Smooth transition for rotation */
+  margin-right: 5px; /* Space between the plus icon and text */
+}
+
+.contact-us:hover .plus-contact-us {
+  transform: rotate(45deg);
+}
+
+/* Make plus icon rotate when hovered directly */
+.plus-contact-us:hover {
+  transform: rotate(45deg);
+}

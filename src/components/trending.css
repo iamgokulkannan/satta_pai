@@ -1,0 +1,87 @@
+:root {
+    --height: 300px; /* Updated to 300px */
+    --width: 300px;  /* Updated to 300px */
+    --quantity: 9;   /* Total number of items */
+  }
+  
+  body {
+    margin: 0;
+    background-color: #e5e5e5;
+  }
+  
+  .slider,
+  .slider-reverse {
+    width: 100%;
+    height: var(--height);
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 10% 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10% 90%, transparent);
+  }
+  
+  .slider .list,
+  .slider-reverse .list {
+    display: flex;
+    position: relative;
+  }
+  
+  .slider .list .item {
+    width: var(--width);
+    height: var(--height);
+    position: absolute;
+    left: calc(var(--width) * (var(--position) - 1)); /* Sequential positioning */
+    animation: autoRun 10s linear infinite;
+    animation-delay: var(--animationDelay, 0s); /* Stagger animation */
+    transition: filter 0.5s;
+  }
+  
+  .slider-reverse .list .item {
+    width: var(--width);
+    height: var(--height);
+    position: absolute;
+    right: calc(var(--width) * (var(--position) + 1)); /* Sequential positioning */
+    animation: autoRunReverse 10s linear infinite;
+    animation-delay: var(--animationDelay, 0s); /* Stagger animation */
+    transition: filter 0.5s;
+  }
+  
+  .slider .list .item img,
+  .slider-reverse .list .item img {
+    width: 100%;
+    height: 100%; /* Ensures images fill the item dimensions */
+  }
+  
+  @keyframes autoRun {
+    from {
+      left: 100%;
+    }
+    to {
+      left: calc(var(--width) * -1);
+    }
+  }
+  
+  @keyframes autoRunReverse {
+    from {
+      right: 100%;
+    }
+    to {
+      right: calc(var(--width) * -1); /* Adjusted to match the width */
+    }
+  }
+  
+  .slider:hover .item {
+    animation-play-state: paused !important;
+    filter: grayscale(1);
+  }
+  
+  .slider .item:hover {
+    filter: grayscale(0);
+  }
+  
+  .slider-reverse:hover .item {
+    animation-play-state: paused !important;
+    filter: grayscale(1);
+  }
+  
+  .slider-reverse .item:hover {
+    filter: grayscale(0);
+  }
