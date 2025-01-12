@@ -77,7 +77,6 @@ a {
   transform: rotate(45deg);
 }
 
-/* Make plus icon rotate when hovered directly */
 .plus-contact-us:hover {
   transform: rotate(45deg);
 }
