@@ -1,12 +1,14 @@
 import Intro from './components/intro';
 import NavBar from './components/navBar';
-import Trending from './components/trending';
+import InfinteScroll from './components/infinteScroll';
+import InfinteScrollReverse from './components/infinteScrollReverse';
 function App() {
   return (
     <div className="App">
       <NavBar />
       <Intro />
-      <Trending />
+      <InfinteScroll />
+      <InfinteScrollReverse />
     </div>
   );
 }

@@ -1,0 +1,71 @@
+body {
+  background: #f2f2f2;
+}
+
+@keyframes slide-reverse {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.logos-reverse {
+  overflow: hidden;
+  padding: 0 0;
+  margin-bottom: 4rem;
+  background: white;
+  white-space: nowrap;
+  position: relative;
+}
+
+.logos-reverse:before,
+.logos-reverse:after {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  content: "";
+  z-index: 2;
+}
+
+.logos-reverse:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+}
+
+.logos-reverse:after {
+  right: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+}
+
+.logos-reverse:hover .logos-slide-reverse {
+  animation-play-state: paused;
+}
+
+.logos-slide-reverse {
+  display: inline-block;
+  animation: 14s slide-reverse linear infinite;
+}
+
+.logos-slide-reverse img {
+  height: 300px;
+  width: 300px;
+  margin: 0 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: grayscale(0);
+}
+
+.logos-slide-reverse img:hover {
+  transform: scale(1.1);
+  filter: grayscale(0);
+}
+
+.logos-slide-reverse:hover img {
+  filter: grayscale(1);
+}
+
+.logos-slide-reverse:hover img:hover {
+  filter: grayscale(0);
+}
