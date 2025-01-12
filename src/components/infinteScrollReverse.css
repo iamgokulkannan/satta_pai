@@ -4,10 +4,10 @@ body {
 
 @keyframes slide-reverse {
   from {
-    transform: translateX(-100%);
+    transform: translateX(-40%); /* Start off-screen to the left */
   }
   to {
-    transform: translateX(0);
+    transform: translateX(60%); /* Move all the way to the right, off-screen */
   }
 }
 
@@ -25,16 +25,16 @@ body {
   top: 0;
   height: 100%;
   content: "";
-  z-index: 2;
+  z-index: -2;
 }
 
 .logos-reverse:before {
-  left: 0;
+  left: -100%; /* Start the gradient from the left side */
   background: linear-gradient(to left, rgba(255, 255, 255, 0), black);
 }
 
 .logos-reverse:after {
-  right: 0;
+  right: -100%; /* Ensure the right side is also covered */
   background: linear-gradient(to right, rgba(255, 255, 255, 0), black);
 }
 
@@ -46,7 +46,7 @@ body {
   -webkit-filter: drop-shadow(2px 1px 0 black)
                   drop-shadow(-1px -1px 0 black);
   filter: drop-shadow(2px 1px 0 black) 
-          drop-shadow(-1px -1px 0 white);
+          drop-shadow(-1px -1px 0 black);
   display: inline-block;
   animation: 200s slide-reverse linear infinite;
 }

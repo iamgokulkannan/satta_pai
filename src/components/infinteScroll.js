@@ -11,155 +11,21 @@ import image8 from '../assets/images/slider2_8.png';
 import image9 from '../assets/images/slider2_9.png';
 
 const InfinteScroll = () => {
+  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
+  
   return (
-    <div class="logos">
-      <div class="logos-slide">
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
-      <img src={image1} alt='Hero 1'/>
-      <img src={image2} alt='Hero 2'/>
-      <img src={image3} alt='Hero 3'/>
-      <img src={image4} alt='Hero 4'/>
-      <img src={image5} alt='Hero 5'/>
-      <img src={image6} alt='Hero 6'/>
-      <img src={image7} alt='Hero 7'/>
-      <img src={image8} alt='Hero 8'/>
-      <img src={image9} alt='Hero 9'/>
+    <div className="logos">
+      <div className="logos-slide">
+        {/* Render images in original order (1 to 9), and repeat the sequence */}
+        {Array(10).fill().map((_, index) => (
+          <React.Fragment key={index}>
+            {images.map((image, i) => (
+              <img key={i} src={image} alt={`Hero ${i + 1}`} />
+            ))}
+          </React.Fragment>
+        ))}
       </div>
-  </div>
+    </div>
   );
 };
 
