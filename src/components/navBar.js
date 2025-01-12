@@ -21,10 +21,33 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+
+    // Add hover effects for contact buttons
+    const contactUs = document.querySelector(".contact-us");
+    const plusContactUs = document.querySelector(".plus-contact-us");
+
+    if (contactUs && plusContactUs) {
+      const handleMouseOver = () => {
+        plusContactUs.style.transform = "rotate(45deg)";
+      };
+
+      const handleMouseOut = () => {
+        plusContactUs.style.transform = "rotate(0deg)";
+      };
+
+      contactUs.addEventListener("mouseover", handleMouseOver);
+      plusContactUs.addEventListener("mouseover", handleMouseOver);
+      plusContactUs.addEventListener("mouseout", handleMouseOut);
+
+      // Cleanup event listeners on unmount
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        contactUs.removeEventListener("mouseover", handleMouseOver);
+        plusContactUs.removeEventListener("mouseover", handleMouseOver);
+        plusContactUs.removeEventListener("mouseout", handleMouseOut);
+      };
+    }
   }, []);
 
   return (

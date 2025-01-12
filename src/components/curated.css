@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'quicksand';
+    src: url('../assets/fonts/quicksand/quicksand.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.option-images {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Center images horizontally */
+    align-items: center; /* Center images vertically */
+    margin: 4rem auto; /* Center the container itself */
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+.option-images img {
+    width: 300px; /* Set a fixed width for all images */
+    height: 300px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border: 0.1rem black solid; /* Add a black border around the images */
+    transition: transform 0.4s ease-in-out; /* Add a smooth transition effect */
+}
+
+.option-images img:hover {
+    transform: scale(0.9); /* Scale the image up slightly on hover */
+    cursor: pointer;
+}
+
+
+.options {
+    color: black;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", serif;
+    letter-spacing: 0.3em;
+}
+
+.image-container p {
+    color: black;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", serif;
+    letter-spacing: 0rem;
+    font-weight: bold;
+}
+
+.image-container p:hover {
+    cursor: pointer;
+}

@@ -1,6 +1,10 @@
 @font-face {
   font-family: 'chisato';
-  src: url('../../../chisato/chisato.ttf') format('truetype');
+  src: url('../assets/fonts/chisato/chisato.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Atma';
+  src: url("../assets/fonts/atma/Atma-Light.ttf") format("truetype");
 }
 
 body {
@@ -37,14 +41,31 @@ body {
 .heroText {
   font-family: chisato;
   position: absolute;
-  color: white;
+  color: black;
   font-size: 10rem;
   font-weight: bold;
   text-align: center;
   transition: font-size 0.4s ease, transform 0.4s ease;
 }
-
 .heroText.scrolled {
   top: 0;
   font-size: 1rem;
+}
+
+.slogan {
+  font-family: Atma;
+  font-size: 1rem;
+  font-weight: 100;
+  font-style: normal;
+  position: absolute;
+  color: black;
+  text-align: center;
+  top: 35rem;
+  transition: font-size 0.4s ease, transform 0.4s ease;
+}
+
+.slogan.scrolled {
+  top: 0;
+  font-size: 0.2rem;
+  opacity: 0; /* Fully hidden when scrolled */
 }

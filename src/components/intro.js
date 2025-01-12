@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import hero from '../assets/hero.jpg';
+import hero from '../assets/images/hero.jpg';
 import './intro.css';
 
 const Intro = () => {
@@ -21,6 +21,9 @@ const Intro = () => {
       </div>
       <div className={`heroText ${isScrolled ? 'scrolled' : ''}`}>
         <h1>Satta Pai</h1>
+      </div>
+      <div className={`slogan ${isScrolled ? 'scrolled' : ''}`}>
+        <h1>The tribe of clothes you wanted till now</h1>
       </div>
     </section>
   );
