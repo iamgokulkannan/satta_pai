@@ -37,6 +37,7 @@ const NavBar = () => {
       };
 
       contactUs.addEventListener("mouseover", handleMouseOver);
+      contactUs.addEventListener("mouseout", handleMouseOut);
       plusContactUs.addEventListener("mouseover", handleMouseOver);
       plusContactUs.addEventListener("mouseout", handleMouseOut);
 
@@ -44,6 +45,7 @@ const NavBar = () => {
       return () => {
         window.removeEventListener("scroll", handleScroll);
         contactUs.removeEventListener("mouseover", handleMouseOver);
+        contactUs.removeEventListener("mouseout", handleMouseOut);
         plusContactUs.removeEventListener("mouseover", handleMouseOver);
         plusContactUs.removeEventListener("mouseout", handleMouseOut);
       };
