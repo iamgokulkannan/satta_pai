@@ -1,0 +1,34 @@
+.brandings {
+    display: grid;
+    grid-template-columns: repeat(3, 350px); /* Set columns to auto size */
+    gap: 20px;
+    padding: 40px;
+    justify-content: center; /* Center the grid horizontally */
+    text-align: center; /* Center text in headers */
+    font-family: quicksand;
+}
+
+.brandings-column {
+    background-color: #f4f4f4;
+    padding: 20px 40px;
+    border-radius: 8px;
+}
+
+.brandings-column h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.brandings-column p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: black;
+    text-align: justify; /* Justify the text in the brandings-column */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .brandings {
+        grid-template-columns: 1fr; /* Stack the columns vertically on small screens */
+    }
+}

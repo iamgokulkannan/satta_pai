@@ -4,7 +4,7 @@ import Featured from './components/featured';
 import InfinteScroll from './components/infinteScroll';
 import InfinteScrollReverse from './components/infinteScrollReverse';
 import Curated from './components/curated';
-import Updates from './components/updates';
+import Branding from './components/branding';
 import Footer from './components/footer';
 import './App.css';
 function App() {
@@ -16,7 +16,7 @@ function App() {
       <Featured />
       <InfinteScroll />
       <InfinteScrollReverse />
-      <Updates />
+      <Branding/>
       <Footer/>
     </div>
   );
