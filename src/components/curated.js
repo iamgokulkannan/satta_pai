@@ -12,19 +12,19 @@ const Curated = () => {
             <div className="option-images">
                 <div className="image-container">
                     <img src={tshirt} alt="tshirt" />
-                    <p>tshirt</p>
+                    <p>Tees</p>
                 </div>
                 <div className="image-container">
                     <img src={sweatshirt} alt="sweatshirt" />
-                    <p>sweatshirt</p>
+                    <p>Sweat Shirt</p>
                 </div>
                 <div className="image-container">
                     <img src={hoodie} alt="hoodie" />
-                    <p>hoodie</p>
+                    <p>Hoodies</p>
                 </div>
                 <div className="image-container">
                     <img src={oversized} alt="oversized" />
-                    <p>oversized</p>
+                    <p>Oversized Tees</p>
                 </div>
             </div>
         </div>

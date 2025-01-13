@@ -4,10 +4,10 @@ body {
 
 @keyframes slide-reverse {
   from {
-    transform: translateX(-40%); /* Start off-screen to the left */
+    transform: translateX(-90%); /* Start off-screen to the left */
   }
   to {
-    transform: translateX(60%); /* Move all the way to the right, off-screen */
+    transform: translateX(0%); /* Move all the way to the right, off-screen */
   }
 }
 
@@ -61,22 +61,19 @@ body {
 
 .logos-slide-reverse img:hover {
   cursor: pointer;
-  transform: scale(1.3);
+  transform: scale(1.1);
   filter: grayscale(0);
-  border: 0.1rem solid black; /* Maintain the same border on hover */
 }
 
 .logos-slide-reverse:hover img {
   filter: grayscale(1);
-  border: 0.1rem solid black; /* Maintain the same border on hover */
 }
 
 .logos-slide-reverse:hover img:hover {
   filter: grayscale(0);
-  border: 0.1rem solid black; /* Maintain the same border on hover */
 }
 
 .logos-reverse img {
-  border: 0.1rem solid black; /* Adjust the border width and color as needed */
+  border: 0.01em solid black; /* Adjust the border width and color as needed */
   box-sizing: border-box; /* Ensure the border is included in the element's total width and height */
 }
