@@ -1,0 +1,75 @@
+.updates {
+    font-family: quicksand, sans-serif;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.updates-sign-up {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.updates-text {
+    font-size: 2rem;
+    font-weight: 0.5rem;
+}
+
+.subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.input-container {
+    position: relative; /* Ensure the container is positioned relative */
+    width: 400px; /* Set the width of the input container */
+}
+
+.input-container input {
+    width: 100%; /* Match container width */
+    height: 40px; /* Set height */
+    border: 2px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 0 15px; /* Add padding inside the input */
+    font-size: 1rem; /* Increase font size */
+    font-family: inherit; /* Use parent font */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+    margin: 2rem 0;
+    margin-top: 0rem;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.input-container input:focus {
+    border-color: #000; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a glow effect */
+}
+
+.input-container .submit-btn {
+    position: absolute; /* Position the button inside the container */
+    top: 0; /* Align button at the top of the container */
+    right: 0; /* Align button at the right of the container */
+    height: 40px; /* Match the input height */
+    border: none;
+    border-radius: 0 5px 5px 0; /* Rounded corners for the right side */
+    background-color: #000; /* Button background color */
+    color: white; /* Button text color */
+    font-size: 1rem; /* Font size */
+    font-family: inherit; /* Use parent font */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 0 20px; /* Add horizontal padding */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.input-container .submit-btn:hover {
+    color: black;
+    background-color: transparent;
+}
+
+.input-container .submit-btn:active {
+    transform: scale(0.98); /* Slight shrink on click */
+}

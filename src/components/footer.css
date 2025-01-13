@@ -1,0 +1,13 @@
+.footer{
+    background-color: black;
+}
+
+.footer-brand{
+    font-family: chisato;
+    font-size: 12rem;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    letter-spacing: 0.3em;
+}

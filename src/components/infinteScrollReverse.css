@@ -43,10 +43,6 @@ body {
 }
 
 .logos-slide-reverse {
-  -webkit-filter: drop-shadow(2px 1px 0 black)
-                  drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(2px 1px 0 black) 
-          drop-shadow(-1px -1px 0 black);
   display: inline-block;
   animation: 400s slide-reverse linear infinite;
 }

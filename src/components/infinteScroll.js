@@ -13,7 +13,6 @@ import image9 from '../assets/images/slider2_9.png';
 const InfinteScroll = () => {
   return (
     <div class="logos">
-      <h1 className="featured-text">FEATURED</h1>
       <div class="logos-slide">
         <img src={image1} alt='Hero 1'/>
         <img src={image2} alt='Hero 2'/>
