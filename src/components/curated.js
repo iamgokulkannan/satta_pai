@@ -1,9 +1,7 @@
 import './curated.css';
 import React from 'react';
-import tshirt from '../assets/images/tshirt.png';
-import sweatshirt from '../assets/images/sweatshirt.png';
-import hoodie from '../assets/images/hoodie.png';
-import oversized from '../assets/images/oversized.png';
+import { Link } from 'react-router-dom';
+import { assets } from '../assets/images/assets';
 
 const Curated = () => {
     return (
@@ -11,20 +9,28 @@ const Curated = () => {
             <h1>CURATED BY SATTA PAI</h1>
             <div className="option-images">
                 <div className="image-container">
-                    <img src={tshirt} alt="tshirt" />
-                    <p>Tees</p>
+                    <Link to="/teesPage">
+                        <img src={assets.tshirt} alt="tshirt" />
+                        <p>Tees</p>
+                    </Link>
                 </div>
                 <div className="image-container">
-                    <img src={sweatshirt} alt="sweatshirt" />
-                    <p>Sweat Shirt</p>
+                    <Link to="/sweatShirtsPage">
+                        <img src={assets.sweatshirt} alt="sweatshirt" />
+                        <p>Sweat Shirt</p>
+                    </Link>
                 </div>
                 <div className="image-container">
-                    <img src={hoodie} alt="hoodie" />
-                    <p>Hoodies</p>
+                    <Link to="/hoodiesPage">
+                        <img src={assets.hoodie} alt="hoodie" />
+                        <p>Hoodies</p>
+                    </Link>
                 </div>
                 <div className="image-container">
-                    <img src={oversized} alt="oversized" />
-                    <p>Oversized Tees</p>
+                    <Link to="/overSizedTeesPage">
+                        <img src={assets.oversized} alt="oversized" />
+                        <p>Oversized Tees</p>
+                    </Link>
                 </div>
             </div>
         </div>

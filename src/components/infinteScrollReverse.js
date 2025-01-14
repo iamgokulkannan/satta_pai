@@ -1,310 +1,57 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './infinteScrollReverse.css';
-import image1 from '../assets/images/slider2_1.png';
-import image2 from '../assets/images/slider2_2.png';
-import image3 from '../assets/images/slider2_3.png';
-import image4 from '../assets/images/slider2_4.png';
-import image5 from '../assets/images/slider2_5.png';
-import image6 from '../assets/images/slider2_6.png';
-import image7 from '../assets/images/slider2_7.png';
-import image8 from '../assets/images/slider2_8.png';
-import image9 from '../assets/images/slider2_9.png';
+import { assets, products } from '../assets/images/assets';
 
-const InfinteScrolReverse = () => {
+const InfinteScrollReverse = () => {
+  const navigate = useNavigate(); 
+
+  const imageSources = [
+    assets.slider9,
+    assets.slider8,
+    assets.slider7,
+    assets.slider6,
+    assets.slider5,
+    assets.slider4,
+    assets.slider3,
+    assets.slider2,
+    assets.slider1,
+  ];
+
+  const handleImageClick = (productId, index) => {
+    // Calculate the actual product index based on the clicked image index
+    const productIndex = (products.length - (index % products.length)) - 1; 
+    navigate(`/productDetails/${products[productIndex]._id}`);
+  };
+
   return (
-    <div class="logos-reverse">
-      <div class="logos-slide-reverse">
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-        <img src={image9} alt='Hero 9'/>
-        <img src={image8} alt='Hero 8'/>
-        <img src={image7} alt='Hero 7'/>
-        <img src={image6} alt='Hero 6'/>
-        <img src={image5} alt='Hero 5'/>
-        <img src={image4} alt='Hero 4'/>
-        <img src={image3} alt='Hero 3'/>
-        <img src={image2} alt='Hero 2'/>
-        <img src={image1} alt='Hero 1'/>
-      </div>
+    <div className="logos-reverse">
+      {products.map((product, productIndex) => (
+        <div
+          key={product._id}
+          className="logos-slide-reverse"
+        >
+          {imageSources.map((src, index) => (
+            <img 
+              key={index} 
+              src={src} 
+              alt={`Hero ${index + 1}`} 
+              onClick={() => handleImageClick(product._id, index)} 
+            /> 
+          ))}
+          {/* Repeat the images for infinite scroll effect */}
+          {imageSources.slice().concat(imageSources).map((src, index) => (
+            <img 
+              key={index + imageSources.length} 
+              src={src} 
+              alt={`Hero ${index + imageSources.length + 1}`} 
+              onClick={() => handleImageClick(product._id, index + imageSources.length)} 
+            /> 
+          ))}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default InfinteScrolReverse;
+export default InfinteScrollReverse;

@@ -1,0 +1,108 @@
+.product-details {
+  margin-top: 60px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.product-details img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.product-details .zoomed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px; /* Set zoom square to 600px */
+  height: 600px; /* Set zoom square to 600px */
+  background-size: 1200px 1200px; /* Double the size of the image for proper zoom */
+  background-repeat: no-repeat;
+  border: 1px solid #ddd;
+  pointer-events: none;
+  display: none; /* Hidden initially */
+}
+
+.details {
+  margin-top: -2.7rem;
+  font-family: quicksand;
+  margin-left: 3rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.details h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.details p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.product-images {
+  display: flex;
+  position: relative;
+  padding-right: 2rem;
+  flex-direction: column;
+}
+
+.product-details img {
+  display: relative;
+  height: 600px;
+  width: 600px;
+  border: 0.5px solid black;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-images img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.main-image-container {
+  position: relative;
+}
+
+.size-button {
+  width: 3.5rem;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.size-button.selected {
+  background-color: black;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button {
+  
+  display: flex;
+  flex-direction: row;
+}
+
+.button .p {
+  margin-top: 100px;
+}
+
+.size {
+  margin-bottom: 10px;
+}

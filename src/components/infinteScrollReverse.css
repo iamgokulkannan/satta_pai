@@ -44,7 +44,7 @@ body {
 
 .logos-slide-reverse {
   display: inline-block;
-  animation: 400s slide-reverse linear infinite;
+  animation: 30s slide-reverse linear infinite;
 }
 
 .logos-slide-reverse img {

@@ -10,7 +10,15 @@
     font-weight: normal;
     font-style: normal;
   }
+  @font-face {
+      font-family: 'prata-regular';
+      src: url('../src/assets/fonts/prata/Prata-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
 .body{
     background-color: white;
 }
+
+  

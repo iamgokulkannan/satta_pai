@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import hero from '../assets/images/hero.jpg';
+import { assets } from '../assets/images/assets';
 import './intro.css';
+
 
 const Intro = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,7 +18,7 @@ const Intro = () => {
   return (
     <section className="hero">
       <div className="heroImg">
-        <img src={hero} alt="Hero" className="heroBanner" />
+        <img src={assets.hero} alt="Hero" className="heroBanner" />
       </div>
       <div className={`heroText ${isScrolled ? 'scrolled' : ''}`}>
         <h1>Satta Pai</h1>
