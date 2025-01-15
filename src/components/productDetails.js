@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { products } from '../assets/images/assets';
+import { useNavigate } from 'react-router-dom';
 import './productDetails.css'; // Import the CSS file
 import NavBar from './navBar';
 
 function ProductDetails({ productId }) {
   const product = products.find((p) => p._id === productId); // Find product by ID
+  const navigate = useNavigate(); 
 
   const [selectedImage, setSelectedImage] = useState(product.image); // Initialize state for selected image
   const [zoomStyle, setZoomStyle] = useState({});
@@ -27,25 +29,10 @@ function ProductDetails({ productId }) {
     setSelectedSize(size);
   };
 
-  function updateQuantity() {
-    const quantityInput = document.querySelector(".quantity-input");
-    const minusButton = document.querySelector(".quantity-button.minus");
-  
-    // Update the input value
-    quantityInput.value = quantity;
-  
-    // Disable the minus button if quantity is 1
-    if (quantity === 1) {
-      minusButton.classList.add("disabled");
-    } else {
-      minusButton.classList.remove("disabled");
-    }
-  }
-  
-  // Initialize the quantity input and buttons
-  document.addEventListener("DOMContentLoaded", () => {
-    updateQuantity();
-  });
+  const handleImageClick = (productId) => {
+    navigate(`/productDetails/${productId}`);
+    window.location.reload();
+  };
 
   const addToCart = () => {
     if (!selectedSize) {
@@ -183,6 +170,19 @@ function ProductDetails({ productId }) {
             <p><strong>Sizing:</strong> {product.details.sizing}</p>
             <p><strong>Order Processing Time:</strong> {product.details.orderProcessingTime}</p>
           </div>
+        </div>
+      </div>
+      <div className="promoting">
+        <div className='youMayAlso'>You may also like</div>
+        <div className="promoting-products">
+          {products
+            .filter((p) => p._id !== product._id && p.subCategory === product.subCategory) // Filter by subcategory
+            .slice(0, 4) // Take up to 4 products
+            .map((p) => (
+              <div key={p._id} className="promoting-product">
+                <img src={p.image} alt={p.name} onClick={() => handleImageClick(p._id)} />
+              </div>
+            ))}
         </div>
       </div>
     </div>
