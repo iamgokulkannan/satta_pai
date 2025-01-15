@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { products } from '../assets/images/assets';
 import { useNavigate } from 'react-router-dom';
-import './productDetails.css'; // Import the CSS file
+import './productDetails.css';
 import NavBar from './navBar';
 
 function ProductDetails({ productId }) {
   const product = products.find((p) => p._id === productId); // Find product by ID
   const navigate = useNavigate(); 
 
-  const [selectedImage, setSelectedImage] = useState(product.image); // Initialize state for selected image
+  const [selectedImage, setSelectedImage] = useState(product?.image || ''); // Initialize state for selected image
   const [zoomStyle, setZoomStyle] = useState({});
   const [selectedSize, setSelectedSize] = useState(null);
-  const [quantity, setQuantity] = useState(1); // Initialize state for quantity
-
-  const increaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const decreaseQuantity = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  };
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    document.title = product.name + " - Satta Pai"; // Set the document title to the product name
-  }, [product.name]);
+    if (product) {
+      document.title = product.name + " - Satta Pai";
+    }
+  }, [product]);
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
@@ -31,7 +25,7 @@ function ProductDetails({ productId }) {
 
   const handleImageClick = (productId) => {
     navigate(`/productDetails/${productId}`);
-    window.location.reload();
+    window.scrollTo(0, 0);
   };
 
   const addToCart = () => {
@@ -42,27 +36,33 @@ function ProductDetails({ productId }) {
 
     const cartItem = {
       productId: product._id,
+      image: product.image,
       name: product.name,
-      price: product.price,
+      price: product.discountedPrice,
       size: selectedSize,
       quantity,
     };
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(cartItem);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existingItemIndex = cart.findIndex(
+      (item) => item.productId === cartItem.productId && item.size === cartItem.size
+    );
+
+    if (existingItemIndex > -1) {
+      cart[existingItemIndex].quantity += cartItem.quantity;
+    } else {
+      cart.push(cartItem);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
     window.location.reload();
   };
 
   const proceedToCheckout = () => {
-    // Logic to proceed to checkout
+    navigate('/checkout');
   };
 
-  if (!product) {
-    return <div>Product not found</div>; // If product is not found
-  }
-
-  // Function to handle the zoom effect
   const handleMouseMove = (e) => {
     const imageElement = e.target;
     const { left, top, width, height } = imageElement.getBoundingClientRect();
@@ -75,25 +75,33 @@ function ProductDetails({ productId }) {
     setZoomStyle({
       backgroundImage: `url(${selectedImage})`,
       backgroundPosition: `${backgroundX}% ${backgroundY}%`,
-      display: 'block', // Show the zoomed area
+      display: 'block',
     });
   };
 
-  // Function to hide zoom when mouse leaves the image
   const handleMouseLeave = () => {
-    setZoomStyle({ display: 'none', backgroundImage: 'none' }); // Remove background image when not zoomed
+    setZoomStyle({ display: 'none', backgroundImage: 'none' });
   };
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
 
   return (
     <div>
       <NavBar disableScrollEffect={true} />
       <div className="product-details">
         <div className="product-images">
-          <img src={product.image} alt={product.name} onClick={() => setSelectedImage(product.image)} />
-          <img src={product.option1} alt={product.option1} onClick={() => setSelectedImage(product.option1)} />
-          <img src={product.option2} alt={product.option2} onClick={() => setSelectedImage(product.option2)} />
-          <img src={product.option3} alt={product.option3} onClick={() => setSelectedImage(product.option3)} />
-          <img src={product.option4} alt={product.option4} onClick={() => setSelectedImage(product.option4)} />
+          {[product.image, product.option1, product.option2, product.option3, product.option4].map((img, index) => (
+            img && (
+              <img
+                key={index}
+                src={img}
+                alt={`Option ${index + 1}`}
+                onClick={() => setSelectedImage(img)}
+              />
+            )
+          ))}
         </div>
 
         <div className="main-image-container">
@@ -120,8 +128,9 @@ function ProductDetails({ productId }) {
           <div className="shipping">
             <p><span className="underline">Shipping</span> calculated at checkout</p>
           </div>
-          <div className='button-container'>
-            <p className='size'>Size:</p>
+
+          <div className="button-container">
+            <p className="size">Size:</p>
             {product.sizes.map((size) => (
               <button
                 key={size}
@@ -137,7 +146,7 @@ function ProductDetails({ productId }) {
             <p>Quantity</p>
             <div className="quantity-container-box">
               <button
-                onClick={decreaseQuantity}
+                onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
                 className={`quantity-button minus ${quantity === 1 ? 'disabled' : ''}`}
                 disabled={quantity === 1}
               >
@@ -145,39 +154,36 @@ function ProductDetails({ productId }) {
               </button>
               <span className="quantity">{quantity}</span>
               <button
-                onClick={increaseQuantity}
+                onClick={() => setQuantity((prev) => prev + 1)}
                 className="quantity-button plus"
               >
                 +
               </button>
             </div>
           </div>
-            <button onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
-            <button onClick={proceedToCheckout} className="checkout-button">Proceed to Checkout</button>
 
+          <button onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
+          <button onClick={proceedToCheckout} className="checkout-button">Proceed to Checkout</button>
 
-          {/* Rendering product details */}
           <div className="product-additional-details">
-            <p style={{fontFamily: '500'}}>{product.description}</p>
+            <p style={{ fontWeight: '500' }}>{product.description}</p>
             <p><strong>Composition:</strong> {product.details.composition}</p>
             <p><strong>GSM:</strong> {product.details.gsm}</p>
             <p><strong>Color:</strong> {product.details.color}</p>
             <p><strong>Production Country:</strong> {product.details.productionCountry}</p>
-            <p><strong>Wash Care:</strong> {product.details.washCare[0]}</p>
-            {product.details.washCare.slice(1).map((instruction, index) => (
-              <p key={index}>{instruction}</p>
-            ))}
+            <p><strong>Wash Care:</strong> {product.details.washCare.join(', ')}</p>
             <p><strong>Sizing:</strong> {product.details.sizing}</p>
             <p><strong>Order Processing Time:</strong> {product.details.orderProcessingTime}</p>
           </div>
         </div>
       </div>
+
       <div className="promoting">
-        <div className='youMayAlso'>You may also like</div>
+        <div className="youMayAlso">You may also like</div>
         <div className="promoting-products">
           {products
-            .filter((p) => p._id !== product._id && p.subCategory === product.subCategory) // Filter by subcategory
-            .slice(0, 4) // Take up to 4 products
+            .filter((p) => p._id !== product._id && p.subCategory === product.subCategory)
+            .slice(0, 4)
             .map((p) => (
               <div key={p._id} className="promoting-product">
                 <img src={p.image} alt={p.name} onClick={() => handleImageClick(p._id)} />

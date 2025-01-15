@@ -22,6 +22,7 @@ const InfinteScrollReverse = () => {
     // Calculate the actual product index based on the clicked image index
     const productIndex = (products.length - (index % products.length)) - 1; 
     navigate(`/productDetails/${products[productIndex]._id}`);
+    window.scrollTo(0, 0);
   };
 
   return (

@@ -69,11 +69,17 @@ const NavBar = ({ disableScrollEffect }) => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartCount(cart.length);
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+    setCartCount(totalQuantity);
   }, []);
 
   const handleClick = () => {
     navigate('/');
+  };
+
+  const cartClick = () => {
+    navigate('/cart');
+    window.scrollTo(0, 0);
   };
 
   const toggleMobileMenu = () => {
@@ -89,10 +95,8 @@ const NavBar = ({ disableScrollEffect }) => {
       <a href="/" className="nav-text-link">
         <h1 ref={navTextRef} id="nav-text" className="nav-text" onClick={handleClick}>Satta Pai</h1>
       </a>
-
       <div className="icons">
-        <img src={assets.user_icon} alt="user icon"/>
-        <div className="cart-icon-container">
+        <div className="cart-icon-container" onClick={cartClick}>
           <img src={assets.cart_icon} alt="cart icon"/>
           {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </div>
