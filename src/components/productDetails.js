@@ -9,13 +9,51 @@ function ProductDetails({ productId }) {
   const [selectedImage, setSelectedImage] = useState(product.image); // Initialize state for selected image
   const [zoomStyle, setZoomStyle] = useState({});
   const [selectedSize, setSelectedSize] = useState(null);
+  const [quantity, setQuantity] = useState(1); // Initialize state for quantity
+
+  const increaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
 
   useEffect(() => {
-    document.title = product.name; // Set the document title to the product name
+    document.title = product.name + (" - Satta Pai"); // Set the document title to the product name
   }, [product.name]);
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
+  };
+
+  
+  function updateQuantity() {
+    const quantityInput = document.querySelector(".quantity-input");
+    const minusButton = document.querySelector(".quantity-button.minus");
+  
+    // Update the input value
+    quantityInput.value = quantity;
+  
+    // Disable the minus button if quantity is 1
+    if (quantity === 1) {
+      minusButton.classList.add("disabled");
+    } else {
+      minusButton.classList.remove("disabled");
+    }
+  }
+  
+  // Initialize the quantity input and buttons
+  document.addEventListener("DOMContentLoaded", () => {
+    updateQuantity();
+  });
+
+  const addToCart = () => {
+    // Logic to add the product to the cart
+  };
+
+  const proceedToCheckout = () => {
+    // Logic to proceed to checkout
   };
 
   if (!product) {
@@ -44,6 +82,8 @@ function ProductDetails({ productId }) {
     setZoomStyle({ display: 'none', backgroundImage: 'none' }); // Remove background image when not zoomed
   };
 
+  
+
   return (
     <div>
       <NavBar disableScrollEffect={true} />
@@ -68,11 +108,20 @@ function ProductDetails({ productId }) {
 
         <div className="details">
           <h1>{product.name}</h1>
-          <p>{product.description}</p>
-          <p>Price: Rs. {product.price}.00</p>
-          <p>Category: {product.category}</p>
+          <div className="price-container">
+            {product.originalPrice && (
+              <span className="original-price" style={{ textDecoration: 'line-through', marginRight: '10px' }}>
+                Rs. {product.originalPrice}.00
+              </span>
+            )}
+            <span className="discounted-price">Rs. {product.discountedPrice}.00 </span>
+            {product.originalPrice && <span className="sale-box">Sale</span>}
+          </div>
+          <div className="shipping">
+            <p><span className="underline">Shipping</span> calculated at checkout</p>
+          </div>
           <div className='button-container'>
-            <p className='size'>Sizes:</p>
+            <p className='size'>Size:</p>
             {product.sizes.map((size) => (
               <button
                 key={size}
@@ -82,6 +131,44 @@ function ProductDetails({ productId }) {
                 {size}
               </button>
             ))}
+          </div>
+
+          <div className="quantity-container">
+            <p>Quantity</p>
+            <div className="quantity-container-box">
+              <button
+                onClick={decreaseQuantity}
+                className={`quantity-button minus ${quantity === 1 ? 'disabled' : ''}`}
+                disabled={quantity === 1}
+              >
+                -
+              </button>
+              <span className="quantity">{quantity}</span>
+              <button
+                onClick={increaseQuantity}
+                className="quantity-button plus"
+              >
+                +
+              </button>
+            </div>
+          </div>
+            <button onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
+            <button onClick={proceedToCheckout} className="checkout-button">Proceed to Checkout</button>
+
+
+          {/* Rendering product details */}
+          <div className="product-additional-details">
+            <p style={{fontFamily: '500'}}>{product.description}</p>
+            <p><strong>Composition:</strong> {product.details.composition}</p>
+            <p><strong>GSM:</strong> {product.details.gsm}</p>
+            <p><strong>Color:</strong> {product.details.color}</p>
+            <p><strong>Production Country:</strong> {product.details.productionCountry}</p>
+            <p><strong>Wash Care:</strong> {product.details.washCare[0]}</p>
+            {product.details.washCare.slice(1).map((instruction, index) => (
+              <p key={index}>{instruction}</p>
+            ))}
+            <p><strong>Sizing:</strong> {product.details.sizing}</p>
+            <p><strong>Order Processing Time:</strong> {product.details.orderProcessingTime}</p>
           </div>
         </div>
       </div>
