@@ -20,14 +20,13 @@ function ProductDetails({ productId }) {
   };
 
   useEffect(() => {
-    document.title = product.name + (" - Satta Pai"); // Set the document title to the product name
+    document.title = product.name + " - Satta Pai"; // Set the document title to the product name
   }, [product.name]);
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
 
-  
   function updateQuantity() {
     const quantityInput = document.querySelector(".quantity-input");
     const minusButton = document.querySelector(".quantity-button.minus");
@@ -49,7 +48,23 @@ function ProductDetails({ productId }) {
   });
 
   const addToCart = () => {
-    // Logic to add the product to the cart
+    if (!selectedSize) {
+      alert("Please select a size");
+      return;
+    }
+
+    const cartItem = {
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
+      quantity,
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(cartItem);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.reload();
   };
 
   const proceedToCheckout = () => {
@@ -81,8 +96,6 @@ function ProductDetails({ productId }) {
   const handleMouseLeave = () => {
     setZoomStyle({ display: 'none', backgroundImage: 'none' }); // Remove background image when not zoomed
   };
-
-  
 
   return (
     <div>

@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './navBar.css';
+import {assets} from '../assets/images/assets'; // Adjust the import as needed
 
 const NavBar = ({ disableScrollEffect }) => {
   const [isVisible, setIsVisible] = useState(false);
   const introTextRef = useRef(null);
   const navTextRef = useRef(null);
   const navigate = useNavigate();
+  const [cartCount, setCartCount] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+
 
   // Handle scroll and hover effects
   useEffect(() => {
@@ -62,9 +67,20 @@ const NavBar = ({ disableScrollEffect }) => {
     };
   }, [disableScrollEffect]);
 
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartCount(cart.length);
+  }, []);
+
   const handleClick = () => {
     navigate('/');
   };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+
 
   return (
     <nav className={`navbar ${isVisible ? 'visible' : ''}`}>
@@ -73,6 +89,26 @@ const NavBar = ({ disableScrollEffect }) => {
       <a href="/" className="nav-text-link">
         <h1 ref={navTextRef} id="nav-text" className="nav-text" onClick={handleClick}>Satta Pai</h1>
       </a>
+
+      <div className="icons">
+        <img src={assets.user_icon} alt="user icon"/>
+        <div className="cart-icon-container">
+          <img src={assets.cart_icon} alt="cart icon"/>
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+        </div>
+      </div>
+
+      <div className="hamburger" onClick={toggleMobileMenu}>
+        <div
+          className={`line line1 ${isMobileMenuOpen ? 'rotate45' : ''}`}
+        ></div>
+        <div
+          className={`line line2 ${isMobileMenuOpen ? 'opacity0' : ''}`}
+        ></div>
+        <div
+          className={`line line3 ${isMobileMenuOpen ? 'rotate135' : ''}`}
+        ></div>
+      </div>
     </nav>
   );
 };

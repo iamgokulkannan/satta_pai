@@ -78,3 +78,96 @@ a {
 .plus-contact-us:hover {
   transform: rotate(45deg); /* Rotate on hover */
 }
+
+.icons {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 1rem; /* Adjust as needed */
+  top: 1.5rem; /* Align with the top of the parent container */
+}
+
+.icons img {
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.icons img:hover{
+  cursor: pointer;
+}
+
+/* Default styles for larger screens */
+.hamburger {
+  display: none; /* Hide hamburger by default */
+}
+
+.line {
+  background-color: black; /* Yellow color for hamburger lines */
+  height: 0.2rem;
+  width: 2rem;
+  transition: all 0.3s ease;
+}
+
+/* Hamburger line transitions when open */
+.line1 {
+  transform-origin: top left;
+}
+
+.line2 {
+  opacity: 1; /* By default, the middle line is visible */
+}
+
+.line3 {
+  transform-origin: bottom left;
+}
+
+/* When mobile menu is open, animate the lines into 'X' */
+.rotate45 {
+  transform: rotateZ(60deg) translateY(-0.25rem);
+  top: calc(50% - 0.125rem); /* Center the line vertically */
+}
+
+.rotate135 {
+  transform: rotateZ(-60deg) translateY(0.25rem);
+  top: calc(50% - 0.25rem);
+}
+
+.opacity0 {
+  opacity: 0; /* Set a faint opacity for the middle line */
+}
+
+/* Styles for phone screens */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex; /* Show hamburger on small screens */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2rem;
+    height: 1.5rem;
+    cursor: pointer;
+    position: absolute; /* Positioned at the top-right */
+    top: 1.5rem;
+    right: 1rem;
+    z-index: 10001; /* Ensure it's above other content */
+  }
+
+  .icons {
+    right: 3rem; /* Adjust to make space for the hamburger */
+  }
+}
+
+.cart-icon-container {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}

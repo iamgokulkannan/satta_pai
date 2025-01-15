@@ -21,6 +21,10 @@ import option3 from './option3.png';
 import option4 from './option4.png';
 import tshirt from './tshirt.png';
 
+import user_icon from './user_icon.png';
+import cart_icon from './cart_icon.png';
+
+
 // Exporting assets
 export const assets = {
     hero,
@@ -40,6 +44,8 @@ export const assets = {
     slider9,
     sweatshirt,
     tshirt,
+    user_icon,
+    cart_icon
 };
 
 export const products = [
