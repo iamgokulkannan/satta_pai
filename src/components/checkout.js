@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';  // Use useLocation for state
 import NavBar from './navBar';
 import Footer from './footer';
+import { assets } from '../assets/images/assets';
 import './checkout.css';
 
 const Checkout = () => {
-  const location = useLocation();
-  const totalCost = location.state?.totalCost || 0;
-
+  const navigate = useNavigate();
+  const location = useLocation();  // Access the location object to get state
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -15,6 +15,9 @@ const Checkout = () => {
     email: '',
     paymentMethod: 'cod',
   });
+
+  // Get totalCost from location state
+  const totalCost = location.state?.totalCost || 0;  // Fallback to 0 if no state is passed
 
   // Dynamically load Razorpay script
   useEffect(() => {
@@ -37,15 +40,13 @@ const Checkout = () => {
 
     const options = {
       key: 'rzp_test_NaBWqfY1b83Kid',
-      amount: totalCost * 100,
+      amount: totalCost * 100, // Razorpay requires the amount in paise (cents)
       currency: 'INR',
-      name: 'Your Company Name',
-      description: 'Test Transaction',
-      image: 'https://example.com/your_logo',
+      name: 'Satta Pai',
+      description: 'Payment Transaction',
+      image: assets.logo,
       handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
+        navigate('/orderSuccessful');
       },
       prefill: {
         name: formData.name,
@@ -69,6 +70,7 @@ const Checkout = () => {
       <NavBar disableScrollEffect={true} />
       <div className="checkout-container">
         <h2>Checkout</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name:</label>

@@ -8,6 +8,7 @@ import { assets } from '../assets/images/assets';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+  
 
 
   useEffect(() => {
@@ -21,7 +22,6 @@ const Cart = () => {
     window.scrollTo(0, 0);
   };
 
-  
 
   const addAnItem = () => {
     navigate(`/`);

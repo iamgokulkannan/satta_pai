@@ -11,6 +11,7 @@ import ProductDetails from './components/productDetails';
 import Cart from './components/cart';
 import Checkout from './components/checkout';
 import ProductPage from './components/productPage';
+import OrderSuccessful from './components/orderSuccessful';
 import './App.css';
 
 function ProductDetailsWrapper({ addToCart }) {
@@ -19,7 +20,7 @@ function ProductDetailsWrapper({ addToCart }) {
 }
 
 function App() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([]);  // This ensures cart is always an array
 
   const addToCart = (item) => {
     setCart([...cart, item]);
@@ -28,17 +29,14 @@ function App() {
   const removeFromCart = (itemId) => {
     setCart(cart.filter(item => item.id !== itemId));
   };
+
+
   return (
     <Router>
       <div className="App">
         <NavBar />
         <Routes>
-          <Route path="/productDetails/:productId" element={
-            <>
-              <ProductDetailsWrapper addToCart={addToCart} />
-              <Footer />
-            </>
-          } />
+          <Route path="/productDetails/:productId" element={<ProductDetailsWrapper addToCart={addToCart} />} />
           <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
           <Route path="/" element={
             <>
@@ -50,9 +48,12 @@ function App() {
               <Footer />
             </>
           } />
-          <Route path="/checkout" element={< Checkout />}>
-          </Route>
+          <Route path="/checkout" element={<Checkout cart={cart} />} />
           <Route path="/products/:subCategory" element={<ProductPage />} />
+          <Route
+            path="/orderSuccessful"
+            element={<OrderSuccessful cart={cart} />}
+          />
         </Routes>
       </div>
     </Router>

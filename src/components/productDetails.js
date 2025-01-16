@@ -61,6 +61,10 @@ function ProductDetails({ productId }) {
   };
 
   const proceedToCheckout = (totalCost) => {
+    if (!selectedSize) {
+      alert("Please select a size");
+      return;
+    }
     navigate('/checkout', { state: { totalCost } });
   };
 
