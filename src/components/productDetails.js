@@ -25,6 +25,7 @@ function ProductDetails({ productId }) {
 
   const handleImageClick = (productId) => {
     navigate(`/productDetails/${productId}`);
+    window.location.reload();
     window.scrollTo(0, 0);
   };
 
@@ -59,8 +60,8 @@ function ProductDetails({ productId }) {
     window.location.reload();
   };
 
-  const proceedToCheckout = () => {
-    navigate('/checkout');
+  const proceedToCheckout = (totalCost) => {
+    navigate('/checkout', { state: { totalCost } });
   };
 
   const handleMouseMove = (e) => {
@@ -163,7 +164,7 @@ function ProductDetails({ productId }) {
           </div>
 
           <button onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
-          <button onClick={proceedToCheckout} className="checkout-button">Proceed to Checkout</button>
+          <button onClick={()=>proceedToCheckout(quantity*product.discountedPrice)} className="checkout-button">Proceed to Checkout</button>
 
           <div className="product-additional-details">
             <p style={{ fontWeight: '500' }}>{product.description}</p>

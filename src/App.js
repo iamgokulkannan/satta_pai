@@ -9,6 +9,8 @@ import Branding from './components/branding';
 import Footer from './components/footer';
 import ProductDetails from './components/productDetails';
 import Cart from './components/cart';
+import Checkout from './components/checkout';
+import ProductPage from './components/productPage';
 import './App.css';
 
 function ProductDetailsWrapper({ addToCart }) {
@@ -48,6 +50,9 @@ function App() {
               <Footer />
             </>
           } />
+          <Route path="/checkout" element={< Checkout />}>
+          </Route>
+          <Route path="/products/:subCategory" element={<ProductPage />} />
         </Routes>
       </div>
     </Router>

@@ -1,40 +1,39 @@
 import './curated.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 
 const Curated = () => {
-    return (
-        <div className="options">
-            <h1>CURATED BY SATTA PAI</h1>
-            <div className="option-images">
-                <div className="image-container">
-                    <Link to="/teesPage">
-                        <img src={assets.tshirt} alt="tshirt" />
-                        <p>Tees</p>
-                    </Link>
-                </div>
-                <div className="image-container">
-                    <Link to="/sweatShirtsPage">
-                        <img src={assets.sweatshirt} alt="sweatshirt" />
-                        <p>Sweat Shirt</p>
-                    </Link>
-                </div>
-                <div className="image-container">
-                    <Link to="/hoodiesPage">
-                        <img src={assets.hoodie} alt="hoodie" />
-                        <p>Hoodies</p>
-                    </Link>
-                </div>
-                <div className="image-container">
-                    <Link to="/overSizedTeesPage">
-                        <img src={assets.oversized} alt="oversized" />
-                        <p>Oversized Tees</p>
-                    </Link>
-                </div>
-            </div>
+  const navigate = useNavigate();
+
+  const handleImageClick = (subCategory) => {
+    navigate(`/products/${subCategory}`);
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div className="options">
+      <h1>CURATED BY SATTA PAI</h1>
+      <div className="option-images">
+        <div className="image-container" onClick={() => handleImageClick('T-Shirts')}>
+          <img src={assets.tshirt} alt="tshirt" />
+          <p>Tees</p>
         </div>
-    );
+        <div className="image-container" onClick={() => handleImageClick('Sweatshirts')}>
+          <img src={assets.sweatshirt} alt="sweatshirt" />
+          <p>Sweat Shirt</p>
+        </div>
+        <div className="image-container" onClick={() => handleImageClick('Hoodies')}>
+          <img src={assets.hoodie} alt="hoodie" />
+          <p>Hoodies</p>
+        </div>
+        <div className="image-container" onClick={() => handleImageClick('Oversized Tees')}>
+          <img src={assets.oversized} alt="oversized" />
+          <p>Oversized Tees</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Curated;

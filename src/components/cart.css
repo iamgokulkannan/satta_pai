@@ -38,16 +38,9 @@
     margin: 5px 0;
   }
   
-  .cart button {
-    background-color: #ff0000;
-    color: #ffffff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
   
-  .cart button:hover {
-    background-color: #cc0000;
+  .wholeCart{
+    font-family: quicksand;
   }
 
   .empty{
@@ -74,3 +67,135 @@
   .empty text:hover{
     cursor: pointer;
   } 
+
+  .yourCart{
+    font-family: quicksand;
+    font-size: 2rem;
+    margin: 2rem 3px;
+    display: flex;
+  }
+
+  .yourCart p{
+    flex:1;
+  }
+  .add-item{
+    font-size: 1rem;
+    text-decoration: underline;
+  }
+  
+  .add-item:hover{
+    cursor: pointer;
+    text-decoration-thickness: 2px;
+  }
+
+  .cartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .cartHeader p {
+    font-family: quicksand;
+    flex: 1;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: normal;
+
+  }
+  
+  .cartHeader p:first-child {
+    text-align: left;
+  }
+  
+  .cartHeader p:last-child {
+    text-align: right;
+  }
+  
+  .quantityCont {
+    font-family: quicksand;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    gap: 10px; /* Space between quantity box and trash icon */
+    max-width: 2rem;
+  }
+  
+  .quantityRemoveContainer {
+    display: flex;
+    border: 1px solid #ccc; /* Light gray border for the entire box */
+    border-radius: 8px; /* Rounded corners for the entire box */
+    padding: 5px;
+    gap: 0; /* Remove gaps between elements */
+    background-color: white;
+    width: 8rem;
+    margin-right: +33.5rem;
+  }
+  
+  .quantityRemoveContainer button {
+    background-color: transparent; /* Transparent background */
+    border: none; /* No individual button borders */
+    color: black;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .quantityRemoveContainer button:hover {
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .quantityRemoveContainer p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 10px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent shrinking */
+    width: 30px; /* Fixed width */
+    background-color: white; /* Match container background */
+    border-left: 1px solid #ccc; /* Divider between buttons and quantity */
+    border-right: 1px solid #ccc;
+  }
+  
+  .trash img{
+    border: none;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    margin-top: 0.4rem;
+    margin-left: 2rem;
+  }
+
+  .totalCost{
+    font-family: quicksand;
+    text-align: right;
+    font-size: 0.9rem;
+  }
+
+  .separator {
+    border: none;
+    height: 1px;
+    background-color: #ccc; /* Light gray color */
+    margin: 10px 0; /* Space around the line */
+  }
+
+  .checkout-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the button to the right */
+  }
+  
+  .checkout {
+    font-size: 13px;
+    padding: 1rem;
+    font-family: quicksand;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin-top: 10px;
+  }
+
+  .checkout:hover{
+    background-color: black;
+    color:white;
+    cursor: pointer;
+  }

@@ -20,9 +20,9 @@ import option2 from './option2.png';
 import option3 from './option3.png';
 import option4 from './option4.png';
 import tshirt from './tshirt.png';
-
 import user_icon from './user_icon.png';
 import cart_icon from './cart_icon.png';
+import bin from './bin.png';
 
 
 // Exporting assets
@@ -45,7 +45,8 @@ export const assets = {
     sweatshirt,
     tshirt,
     user_icon,
-    cart_icon
+    cart_icon,
+    bin
 };
 
 export const products = [
