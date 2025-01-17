@@ -1,0 +1,53 @@
+.orders-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orders-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .orders-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    background: white;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-item h2 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+  }
+  
+  .order-items h3 {
+    margin: 15px 0 5px;
+    font-size: 1rem;
+  }
+  
+  .order-items ul {
+    list-style: square;
+    margin: 0;
+    padding-left: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+  .no-orders {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+  }

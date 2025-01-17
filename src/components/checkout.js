@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';  // Use useLocation for state
+import { useNavigate, useLocation } from 'react-router-dom'; // Use useLocation for state
 import NavBar from './navBar';
 import Footer from './footer';
 import { assets } from '../assets/images/assets';
+import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Firestore imports
+import { getAuth } from 'firebase/auth'; // For authenticated user's ID
 import './checkout.css';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const location = useLocation();  // Access the location object to get state
+  const location = useLocation(); // Access the location object to get state
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -16,8 +22,9 @@ const Checkout = () => {
     paymentMethod: 'cod',
   });
 
-  // Get totalCost from location state
-  const totalCost = location.state?.totalCost || 0;  // Fallback to 0 if no state is passed
+  // Get totalCost and items from location state
+  const totalCost = location.state?.totalCost || 0; // Fallback to 0 if no state is passed
+  const items = location.state?.items || []; // Fallback to an empty array if no items are passed
 
   // Dynamically load Razorpay script
   useEffect(() => {
@@ -35,34 +42,67 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const saveOrderToFirestore = async (paymentDetails) => {
+    if (!user) {
+      alert('You need to be logged in to place an order.');
+      return;
+    }
+
+    try {
+      const orderData = {
+        userId: user.uid,
+        date: new Date(),
+        total: totalCost,
+        items: items,
+        address: formData.address,
+        paymentDetails: paymentDetails || null,
+        paymentMethod: formData.paymentMethod,
+      };
+
+      await addDoc(collection(db, 'orders'), orderData);
+      alert('Order placed successfully!');
+      navigate('/orderSuccessful');
+    } catch (error) {
+      console.error('Error saving order:', error.message);
+      alert('Failed to place order. Please try again.');
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const options = {
-      key: 'rzp_test_NaBWqfY1b83Kid',
-      amount: totalCost * 100, // Razorpay requires the amount in paise (cents)
-      currency: 'INR',
-      name: 'Satta Pai',
-      description: 'Payment Transaction',
-      image: assets.logo,
-      handler: function (response) {
-        navigate('/orderSuccessful');
-      },
-      prefill: {
-        name: formData.name,
-        email: formData.email,
-        contact: formData.phone,
-      },
-      notes: {
-        address: formData.address,
-      },
-      theme: {
-        color: '#3399cc',
-      },
-    };
+    if (formData.paymentMethod === 'cod') {
+      // Save the order for Cash on Delivery
+      saveOrderToFirestore();
+    } else {
+      // Razorpay Online Payment
+      const options = {
+        key: 'rzp_test_NaBWqfY1b83Kid',
+        amount: totalCost * 100, // Razorpay requires the amount in paise (cents)
+        currency: 'INR',
+        name: 'Satta Pai',
+        description: 'Payment Transaction',
+        image: assets.logo,
+        handler: function (response) {
+          // Save the order after successful payment
+          saveOrderToFirestore(response);
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        notes: {
+          address: formData.address,
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
 
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    }
   };
 
   return (

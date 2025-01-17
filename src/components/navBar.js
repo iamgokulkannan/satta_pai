@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './navBar.css';
-import {assets} from '../assets/images/assets'; // Adjust the import as needed
+import { assets } from '../assets/images/assets'; // Adjust the import as needed
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-const NavBar = ({ disableScrollEffect }) => {
+const NavBar = ({ disableScrollEffect, username, setUsername }) => {
   const [isVisible, setIsVisible] = useState(false);
   const introTextRef = useRef(null);
   const navTextRef = useRef(null);
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false); // Track dropdown visibility
 
-
+  const auth = getAuth();
 
   // Handle scroll and hover effects
   useEffect(() => {
@@ -29,50 +32,36 @@ const NavBar = ({ disableScrollEffect }) => {
       }
     };
 
-    const contactUs = document.querySelector(".contact-us");
-    const plusContactUs = document.querySelector(".plus-contact-us");
-
-    const handleMouseOver = () => {
-      plusContactUs.style.transform = "rotate(45deg)";
-    };
-
-    const handleMouseOut = () => {
-      plusContactUs.style.transform = "rotate(0deg)";
-    };
-
-    // Scroll effect will be disabled if the flag is set
     if (!disableScrollEffect) {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener('scroll', handleScroll);
     } else {
-      setIsVisible(true); // Directly show the navbar when scroll effect is disabled
+      setIsVisible(true);
     }
 
-    // Add hover effects for the buttons
-    if (contactUs && plusContactUs) {
-      contactUs.addEventListener("mouseover", handleMouseOver);
-      contactUs.addEventListener("mouseout", handleMouseOut);
-      plusContactUs.addEventListener("mouseover", handleMouseOver);
-      plusContactUs.addEventListener("mouseout", handleMouseOut);
-    }
-
-    // Cleanup on unmount
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (contactUs && plusContactUs) {
-        contactUs.removeEventListener("mouseover", handleMouseOver);
-        contactUs.removeEventListener("mouseout", handleMouseOut);
-        plusContactUs.removeEventListener("mouseover", handleMouseOver);
-        plusContactUs.removeEventListener("mouseout", handleMouseOut);
-      }
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [disableScrollEffect]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
     setCartCount(totalQuantity);
-  }, []);
-
+  
+    // Listen for user authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUsername(user.displayName || user.email.split('@')[0]); // Use display name or part of email
+      } else {
+        setIsLoggedIn(false);
+        setUsername('');
+      }
+    });
+  
+    return () => unsubscribe();
+  }, [auth, navigate, setUsername]);
+  
   const handleClick = () => {
     navigate('/');
   };
@@ -86,32 +75,65 @@ const NavBar = ({ disableScrollEffect }) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setIsLoggedIn(false);
+      setUsername('');
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging out:', error.message);
+    }
+  };
 
+  const profile = () =>{
+    navigate('/profile');
+    setShowDropdown(false);
+  }
+
+  const order = () =>{
+    navigate('/orders');
+    showDropdown(false);
+  }
 
   return (
     <nav className={`navbar ${isVisible ? 'visible' : ''}`}>
       <a href="/" className="plus-contact-us">+</a>
       <a href="/" className="contact-us">Contact Us</a>
       <a href="/" className="nav-text-link">
-        <h1 ref={navTextRef} id="nav-text" className="nav-text" onClick={handleClick}>Satta Pai</h1>
+        <h1 ref={navTextRef} id="nav-text" className="nav-text" onClick={handleClick}>
+          Satta Pai
+        </h1>
       </a>
       <div className="icons">
+        {isLoggedIn ? (
+          <div className="user-menu">
+            <span className="greeting" onClick={() => setShowDropdown((prev) => !prev)}>
+              Hi, {username} <img src={assets.user_icon} alt="" />
+            </span>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                <button onClick={() => profile()}>Profile</button>
+                <button onClick={() => order()}>My Orders</button>
+                <button onClick={handleLogout}>Logout</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="profile" onClick={() => navigate('/login')}>
+            <img src={assets.user_icon} alt="User Icon" />
+          </div>
+        )}
         <div className="cart-icon-container" onClick={cartClick}>
-          <img src={assets.cart_icon} alt="cart icon"/>
+          <img src={assets.cart_icon} alt="Cart Icon" />
           {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </div>
       </div>
 
       <div className="hamburger" onClick={toggleMobileMenu}>
-        <div
-          className={`line line1 ${isMobileMenuOpen ? 'rotate45' : ''}`}
-        ></div>
-        <div
-          className={`line line2 ${isMobileMenuOpen ? 'opacity0' : ''}`}
-        ></div>
-        <div
-          className={`line line3 ${isMobileMenuOpen ? 'rotate135' : ''}`}
-        ></div>
+        <div className={`line line1 ${isMobileMenuOpen ? 'rotate45' : ''}`}></div>
+        <div className={`line line2 ${isMobileMenuOpen ? 'opacity0' : ''}`}></div>
+        <div className={`line line3 ${isMobileMenuOpen ? 'rotate135' : ''}`}></div>
       </div>
     </nav>
   );
