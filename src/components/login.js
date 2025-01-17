@@ -6,13 +6,7 @@ import './login.css';
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDo4CUA8Xe_fwoL8acAgb9BByoygpj8h8s",
-    authDomain: "satta-pai.firebaseapp.com",
-    projectId: "satta-pai",
-    storageBucket: "satta-pai.firebasestorage.app",
-    messagingSenderId: "756966211318",
-    appId: "1:756966211318:web:f9e0512ccbd64a0412f6d7",
-    measurementId: "G-T2L3T4RYK6"
+ 
 };
 
 // Initialize Firebase
