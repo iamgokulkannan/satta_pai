@@ -3,6 +3,7 @@ import { getAuth, deleteUser } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './profile.css';
+import NavBar from './navBar';
 
 const Profile = ({ username, setUsername, setLoading }) => {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
 
   return (
     <div className="profile-container">
+      <NavBar disableScrollEffect={false}/>
       <h1>Profile</h1>
       {successMessage && <p className="success-message">{successMessage}</p>}
       <form>

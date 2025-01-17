@@ -55,7 +55,6 @@ const NavBar = ({ disableScrollEffect, username, setUsername }) => {
         setUsername(user.displayName || user.email.split('@')[0]); // Use display name or part of email
       } else {
         setIsLoggedIn(false);
-        setUsername('');
       }
     });
   
