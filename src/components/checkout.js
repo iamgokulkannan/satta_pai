@@ -7,7 +7,7 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Firest
 import { getAuth } from 'firebase/auth'; // For authenticated user's ID
 import './checkout.css';
 
-const Checkout = () => {
+const Checkout = ({username , setUsername}) => {
   const navigate = useNavigate();
   const location = useLocation(); // Access the location object to get state
   const db = getFirestore();
@@ -28,6 +28,11 @@ const Checkout = () => {
 
   // Dynamically load Razorpay script
   useEffect(() => {
+    if (!user) {
+      alert('You need to be logged in to place an order.');
+      navigate('/login');
+      return;
+    }
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
@@ -36,18 +41,13 @@ const Checkout = () => {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const saveOrderToFirestore = async (paymentDetails) => {
-    if (!user) {
-      alert('You need to be logged in to place an order.');
-      return;
-    }
-
     try {
       const orderData = {
         userId: user.uid,
@@ -107,10 +107,9 @@ const Checkout = () => {
 
   return (
     <div>
-      <NavBar disableScrollEffect={true} />
+      <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
       <div className="checkout-container">
         <h2>Checkout</h2>
-
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name:</label>
@@ -135,10 +134,18 @@ const Checkout = () => {
               <option value="online">Online Payment</option>
             </select>
           </div>
-          <button type="submit" className="checkout-button">Proceed to Payment</button>
         </form>
       </div>
       <Footer />
+        <div className="checkout-button-wrapper">
+          {/* Conditionally render the button */}
+          {formData.paymentMethod !== 'cod' && (
+            <button type="submit" className="checkout-button">Proceed to Payment</button>
+          )}
+          {formData.paymentMethod === 'cod' && (
+            <button type="submit" className="checkout-button">Place Order</button>
+          )}
+        </div>
     </div>
   );
 };

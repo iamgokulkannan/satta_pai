@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './productDetails.css';
 import NavBar from './navBar';
 
-function ProductDetails({ productId }) {
+function ProductDetails({ username, setUsername, productId }) {
   const product = products.find((p) => p._id === productId); // Find product by ID
   const navigate = useNavigate(); 
 
@@ -94,7 +94,7 @@ function ProductDetails({ productId }) {
 
   return (
     <div>
-      <NavBar disableScrollEffect={true} />
+      <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
       <div className="product-details">
         <div className="product-images">
           {[product.image, product.option1, product.option2, product.option3, product.option4].map((img, index) => (

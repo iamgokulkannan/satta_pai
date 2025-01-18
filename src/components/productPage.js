@@ -5,7 +5,7 @@ import NavBar from './navBar';
 import Footer from './footer';
 import './productPage.css';
 
-const ProductPage = () => {
+const ProductPage = ( {username , setUsername} ) => {
     const { subCategory } = useParams();
     const navigate = useNavigate();
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -55,7 +55,7 @@ const ProductPage = () => {
   
     return (
       <div>
-        <NavBar disableScrollEffect={true} />
+        <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
         <div className="product-page">
           <h1>{subCategory}</h1>
           <div className="filters">

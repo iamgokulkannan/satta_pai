@@ -23,6 +23,38 @@ import tshirt from './tshirt.png';
 import user_icon from './user_icon.png';
 import cart_icon from './cart_icon.png';
 import bin from './bin.png';
+import P1_Back from './P1-Back.png';
+import P1_CloseUp from './P1-CloseUp.png';
+import P1_Front from './P1-Front.png';
+import P2_Back from './P2-Back.png';
+import P2_Front from './P2-Front.png';
+import P3_Back from './P3-Back.png';
+import P3_CloseUp from './P3-CloseUp.png';
+import P3_Front from './P3-Front.png';
+import P4_Front from './P4-Front.png';
+import P5_Back from './P5-Back.png';
+import P5_CloseUp from './P5-CloseUp.png';
+import P6_Front from './P6-Front.png';
+import P6_Model1 from './P6-Model1.png';
+import P6_Model2 from './P6-Model2.png';
+import P7_Back from './P7-Back.png';
+import P7_Far from './P7-Far.png';
+import P7_Front from './P7-Front.png';
+import P8_Front from './P8-Front.png';
+import P9_Back from './P9-Back.png';
+import P9_Front from './P9-Front.png';
+import P10_Front1 from './P10-Front1.png';
+import P10_Front2 from './P10-Front2.png';
+import P11_Back from './P11-Back.png';
+import P11_Front from './P11-Front.png';
+import P11_Hand from './P11-Hand.png';
+import P11_Head from './P11-Head.png';
+import P12_Back from './P12-Back.png';
+import P12_CloseUp from './P12-CloseUp.png';
+import P12_Front from './P12-Front.png';
+import P13_Back from './P13-Back.png';
+import P13_Front from './P13-Front.png';
+import P13_Side from './P13-Side.png';
 
 
 // Exporting assets
@@ -46,7 +78,7 @@ export const assets = {
     tshirt,
     user_icon,
     cart_icon,
-    bin
+    bin,
 };
 
 export const products = [
@@ -288,6 +320,360 @@ export const products = [
             ],
             sizing: "Body measurement in inches.",
             orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p10",
+        name: "Cozy Sweatshirt",
+        description: "Warm and stylish sweatshirt for cooler days.",
+        originalPrice: 1200,
+        discountedPrice: 899,
+        image: P4_Front,
+        category: "Unisex",
+        subCategory: "Sweatshirts",
+        sizes: ["M", "L", "XL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "60% cotton, 40% polyester",
+            gsm: 280,
+            color: "Grey",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold.",
+                "Do not bleach.",
+                "Dry in shade.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p11",
+        name: "Classic Sweatshirt",
+        description: "Timeless sweatshirt for a comfortable look.",
+        originalPrice: 1300,
+        discountedPrice: 999,
+        image: P9_Back, P9_Front,
+        category: "Men",
+        subCategory: "Sweatshirts",
+        sizes: ["S", "M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: true,
+        details: {
+            composition: "70% cotton, 30% polyester",
+            gsm: 300,
+            color: "Black",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold with similar colours.",
+                "Do not iron on print.",
+                "Do not tumble dry.",
+                "Cool iron if needed.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p12",
+        name: "Premium Sweatshirt",
+        description: "High-quality sweatshirt for every season.",
+        originalPrice: 1500,
+        discountedPrice: 1099,
+        image: P11_Back, P11_Front, P11_Hand, P11_Head,
+        category: "Women",
+        subCategory: "Sweatshirts",
+        sizes: ["XS", "S", "M", "L"],
+        date: Date.now(),
+        bestseller: true,
+        details: {
+            composition: "50% cotton, 50% polyester",
+            gsm: 320,
+            color: "Red",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not bleach.",
+                "Do not wring.",
+                "Dry in shade.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+    {
+        _id: "p13",
+        name: "Comfort Sweatshirt",
+        description: "Soft and cozy sweatshirt perfect for lounging.",
+        originalPrice: 1400,
+        discountedPrice: 999,
+        image: P12_Back, P12_CloseUp, P12_Front,
+        category: "Unisex",
+        subCategory: "Sweatshirts",
+        sizes: ["M", "L", "XL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "100% cotton",
+            gsm: 300,
+            color: "Blue",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold.",
+                "Do not tumble dry.",
+                "Do not bleach.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p14",
+        name: "Trendy Hoodie",
+        description: "Stylish and comfortable hoodie for all seasons.",
+        originalPrice: 1100,
+        discountedPrice: 799,
+        image: P1_Front, P1_Back, P1_CloseUp,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["S", "M", "L", "XL"],
+        date: Date.now(),
+        bestseller: true,
+        details: {
+            composition: "80% cotton, 20% polyester",
+            gsm: 300,
+            color: "Green",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold.",
+                "Do not bleach.",
+                "Dry in shade.",
+                "Do not iron on print.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p15",
+        name: "Casual Hoodie",
+        description: "Perfect hoodie for casual outings and daily wear.",
+        originalPrice: 1300,
+        discountedPrice: 999,
+        image: P10_Front1, P10_Front2,
+        category: "Men",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "75% cotton, 25% polyester",
+            gsm: 280,
+            color: "Yellow",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not bleach.",
+                "Dry in shade.",
+                "Cool iron if needed.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+    {
+        _id: "p16",
+        name: "Fashion Hoodie",
+        description: "Modern hoodie with a sleek design and great comfort.",
+        originalPrice: 1400,
+        discountedPrice: 1099,
+        image: P3_Back, P3_CloseUp, P3_Front,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["S", "M", "L", "XL"],
+        date: Date.now(),
+        bestseller: true,
+        details: {
+            composition: "85% cotton, 15% polyester",
+            gsm: 320,
+            color: "Red",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold.",
+                "Do not bleach.",
+                "Do not tumble dry.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "48 hours",
+        },
+    },
+    {
+        _id: "p17",
+        name: "Active Hoodie",
+        description: "High-performance hoodie for workouts and casual wear.",
+        originalPrice: 1200,
+        discountedPrice: 899,
+        image: P6_Front, P6_Model1, P6_Model2,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "60% cotton, 40% polyester",
+            gsm: 300,
+            color: "Grey",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold with similar colours.",
+                "Do not bleach.",
+                "Dry in shade.",
+                "Cool iron if needed.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+    {
+        _id: "p18",
+        name: "Urban Hoodie",
+        description: "Trendy hoodie with a perfect urban style and fit.",
+        originalPrice: 1500,
+        discountedPrice: 1199,
+        image: P7_Back, P7_Far, P7_Front,
+        category: "Men",
+        subCategory: "Hoodies",
+        sizes: ["S", "M", "L", "XL"],
+        date: Date.now(),
+        bestseller: true,
+        details: {
+            composition: "90% cotton, 10% spandex",
+            gsm: 300,
+            color: "Black",
+            productionCountry: "India",
+            washCare: [
+                "Machine wash cold.",
+                "Do not wring.",
+                "Do not iron on print.",
+                "Cool iron if necessary.",
+            ],
+            sizing: "Body measurement in inches.",
+            orderProcessingTime: "24 hours",
+        },
+    },
+    {
+        _id: "p19",
+        name: "Sporty Hoodie",
+        description: "Comfortable hoodie for a sporty and active lifestyle.",
+        originalPrice: 1400,
+        discountedPrice: 999,
+        image: P13_Back, P13_Front, P13_Side,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "70% cotton, 30% polyester",
+            gsm: 310,
+            color: "Blue",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not tumble dry.",
+                "Do not bleach.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+
+    {
+        _id: "p20",
+        name: "Sporty Hoodie",
+        description: "Comfortable hoodie for a sporty and active lifestyle.",
+        originalPrice: 1400,
+        discountedPrice: 999,
+        image: P2_Back, P2_Front,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "70% cotton, 30% polyester",
+            gsm: 310,
+            color: "Blue",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not tumble dry.",
+                "Do not bleach.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+
+    {
+        _id: "p21",
+        name: "Sporty Hoodie",
+        description: "Comfortable hoodie for a sporty and active lifestyle.",
+        originalPrice: 1400,
+        discountedPrice: 999,
+        image: P5_Back,P5_CloseUp,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "70% cotton, 30% polyester",
+            gsm: 310,
+            color: "Blue",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not tumble dry.",
+                "Do not bleach.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "72 hours",
+        },
+    },
+
+    {
+        _id: "p22",
+        name: "Sporty Hoodie",
+        description: "Comfortable hoodie for a sporty and active lifestyle.",
+        originalPrice: 1400,
+        discountedPrice: 999,
+        image: P8_Front,
+        category: "Unisex",
+        subCategory: "Hoodies",
+        sizes: ["M", "L", "XL", "XXL"],
+        date: Date.now(),
+        bestseller: false,
+        details: {
+            composition: "70% cotton, 30% polyester",
+            gsm: 310,
+            color: "Blue",
+            productionCountry: "India",
+            washCare: [
+                "Hand wash recommended.",
+                "Do not tumble dry.",
+                "Do not bleach.",
+                "Warm iron if necessary.",
+            ],
+            sizing: "Body measurement in cm.",
+            orderProcessingTime: "72 hours",
         },
     },
 ];

@@ -18,31 +18,31 @@ import Signup from './signup';
 import Orders from './components/order';
 import './App.css';
 
-function ProductDetailsWrapper({ addToCart }) {
-  const { productId } = useParams();
-  return <ProductDetails productId={productId} addToCart={addToCart} />;
-}
 
 function App() {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(true); // Track loading state
   const [cart, setCart] = useState([]);
-
+  
   const addToCart = (item) => {
     setCart([...cart, item]);
   };
-
+  
   const removeFromCart = (itemId) => {
     setCart(cart.filter((item) => item.id !== itemId));
   };
+  function ProductDetailsWrapper({ addToCart }) {
+    const { productId } = useParams();
+    return <ProductDetails productId={productId} addToCart={addToCart} username={username} setUsername={setUsername} />;
+  }
 
   return (
     <Router>
       <div className="App">
         <NavBar username={username} setUsername={setUsername} loading={loading} />
         <Routes>
-          <Route path="/productDetails/:productId" element={<ProductDetailsWrapper addToCart={addToCart} />} />
-          <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
+          <Route path="/productDetails/:productId" element={<ProductDetailsWrapper addToCart={addToCart}  username={username} setUsername={setUsername} />}  />
+          <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart}  username={username} setUsername={setUsername} />} />
           <Route
             path="/"
             element={
@@ -57,12 +57,12 @@ function App() {
             }
           />
           <Route path="/profile" element={<Profile username={username} setUsername={setUsername} setLoading={setLoading} />} />
-          <Route path="/checkout" element={<Checkout cart={cart} />} />
-          <Route path="/products/:subCategory" element={<ProductPage />} />
-          <Route path="/orderSuccessful" element={<OrderSuccessful cart={cart} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/checkout" element={<Checkout cart={cart} username={username} setUsername={setUsername} />} />
+          <Route path="/products/:subCategory" element={<ProductPage username={username} setUsername={setUsername} />} />
+          <Route path="/orderSuccessful" element={<OrderSuccessful cart={cart} username={username} setUsername={setUsername} />} />
+          <Route path="/login" element={<Login  username={username} setUsername={setUsername} />} />
+          <Route path="/signup" element={<Signup username={username} setUsername={setUsername} />} />
+          <Route path="/orders" element={<Orders username={username} setUsername={setUsername} />} />
         </Routes>
       </div>
     </Router>

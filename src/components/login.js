@@ -3,10 +3,16 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
+import NavBar from './navBar';
 
-// Your Firebase configuration
+
 const firebaseConfig = {
- 
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
@@ -27,6 +33,7 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in
                 console.log('User signed in:', userCredential.user);
+                navigate('/');
             })
             .catch((error) => {
                 setError(error.message);
@@ -48,11 +55,12 @@ const Login = () => {
     };
 
     const goToNavigate =() =>{
-        
         navigate('/signup');
     }
 
     return (
+        <>
+        <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
         <div className="login-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
@@ -63,7 +71,7 @@ const Login = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                />
+                    />
                 
                 <label htmlFor="password">Password:</label>
                 <input
@@ -72,7 +80,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                />
+                    />
                 
                 {error && <p className="error">{error}</p>}
                 
@@ -83,6 +91,7 @@ const Login = () => {
             </button>
             <p>Don't have an account? <span onClick={()=>goToNavigate()} className='signup'>Sign Up</span></p>
         </div>
+    </>
     );
 };
 

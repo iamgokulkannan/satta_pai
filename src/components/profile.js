@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, deleteUser } from 'firebase/auth';
+import { getAuth, deleteUser , updateProfile } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './profile.css';
@@ -41,10 +41,18 @@ const Profile = ({ username, setUsername, setLoading }) => {
   const handleSave = async () => {
     try {
       if (user) {
+        // Update Firebase Auth displayName
+        await updateProfile(user, {
+          displayName: username,
+        });
+  
+        // Update Firestore document
         const userDoc = doc(db, 'users', user.uid);
         await setDoc(userDoc, { username, address, phone }, { merge: true });
+  
         setSuccessMessage('Profile updated successfully!');
         console.log('Updated values:', { username, address, phone });
+  
         // Optionally, re-fetch data to reflect changes
         const docSnapshot = await getDoc(userDoc);
         if (docSnapshot.exists()) {
@@ -57,7 +65,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
     } catch (error) {
       console.error('Error updating profile:', error.message);
     }
-    navigate('/'); // Redirect to signup or another appropriate page
+    navigate('/');
   };
 
   const handleDeleteAccount = () => {
@@ -73,7 +81,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
 
   return (
     <div className="profile-container">
-      <NavBar disableScrollEffect={false}/>
+      <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
       <h1>Profile</h1>
       {successMessage && <p className="success-message">{successMessage}</p>}
       <form>

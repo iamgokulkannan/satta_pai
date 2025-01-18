@@ -5,7 +5,7 @@ import './cart.css';
 import { useNavigate } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 
-const Cart = () => {
+const Cart = ({username , setUsername}) => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
   
@@ -68,7 +68,7 @@ const Cart = () => {
   };
   return (
     <div>
-      <NavBar disableScrollEffect={true} />
+      <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
       <div className="cart">
         {cartItems.length === 0 ? (
           <div className="empty">

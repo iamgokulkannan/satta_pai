@@ -3,9 +3,6 @@
     margin: auto;
     margin-top: 5rem;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .checkout-container h2 {
@@ -30,16 +27,12 @@
     border-radius: 4px;
   }
   
-  .checkout-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  .checkout-button-wrapper {
+    right:-1rem;
+    display: flex !important;
+    justify-content: flex-end !important;
   }
   
-  .checkout-button:hover {
-    background-color: #218838;
+  .checkout-button-wrapper button {
+    margin-left: 0 !important;
   }

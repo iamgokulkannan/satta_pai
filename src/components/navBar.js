@@ -52,14 +52,14 @@ const NavBar = ({ disableScrollEffect, username, setUsername }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
-        setUsername(user.displayName || user.email.split('@')[0]); // Use display name or part of email
+        setUsername( username|| user.displayName || user.email.split('@')[0]); // Use display name or part of email
       } else {
         setIsLoggedIn(false);
       }
     });
   
     return () => unsubscribe();
-  }, [auth, navigate, setUsername]);
+  }, [auth, navigate, username, setUsername]);
   
   const handleClick = () => {
     navigate('/');
