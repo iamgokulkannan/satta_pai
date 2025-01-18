@@ -25,3 +25,4 @@ yarn-error.log*
 .vscode
 .env
 webpack.config.js
+userContext.js
