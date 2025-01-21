@@ -59,7 +59,7 @@ function App() {
           <Route path="/profile" element={<Profile username={username} setUsername={setUsername} setLoading={setLoading} />} />
           <Route path="/checkout" element={<Checkout cart={cart} username={username} setUsername={setUsername} />} />
           <Route path="/products/:subCategory" element={<ProductPage username={username} setUsername={setUsername} />} />
-          <Route path="/orderSuccessful" element={<OrderSuccessful cart={cart} username={username} setUsername={setUsername} />} />
+          <Route path="/orderSuccessful" element={<OrderSuccessful username={username} setUsername={setUsername} />} />
           <Route path="/login" element={<Login  username={username} setUsername={setUsername} />} />
           <Route path="/signup" element={<Signup username={username} setUsername={setUsername} />} />
           <Route path="/orders" element={<Orders username={username} setUsername={setUsername} />} />

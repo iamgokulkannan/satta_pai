@@ -80,8 +80,9 @@ const Profile = ({ username, setUsername, setLoading }) => {
   };
 
   return (
-    <div className="profile-container">
+    <>
       <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
+    <div className="profile-container">
       <h1>Profile</h1>
       {successMessage && <p className="success-message">{successMessage}</p>}
       <form>
@@ -91,14 +92,14 @@ const Profile = ({ username, setUsername, setLoading }) => {
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-        />
+          />
 
         <label htmlFor="address">Address:</label>
         <textarea
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-        />
+          />
 
         <label htmlFor="phone">Phone Number:</label>
         <input
@@ -106,7 +107,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
           id="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-        />
+          />
 
         <button type="button" onClick={handleSave}>
           Save
@@ -114,6 +115,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
       </form>
       <button onClick={handleDeleteAccount}>Delete Account</button>
     </div>
+          </>
   );
 };
 

@@ -4,7 +4,7 @@ import './navBar.css';
 import { assets } from '../assets/images/assets'; // Adjust the import as needed
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-const NavBar = ({ disableScrollEffect, username, setUsername }) => {
+const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
   const [isVisible, setIsVisible] = useState(false);
   const introTextRef = useRef(null);
   const navTextRef = useRef(null);
@@ -52,7 +52,7 @@ const NavBar = ({ disableScrollEffect, username, setUsername }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
-        setUsername( username|| user.displayName || user.email.split('@')[0]); // Use display name or part of email
+        setUsername( username || user.displayName || user.email.split('@')[0]); // Use display name or part of email
       } else {
         setIsLoggedIn(false);
       }
@@ -92,9 +92,9 @@ const NavBar = ({ disableScrollEffect, username, setUsername }) => {
 
   const order = () =>{
     navigate('/orders');
-    showDropdown(false);
+    setShowDropdown(false);
   }
-
+  
   return (
     <nav className={`navbar ${isVisible ? 'visible' : ''}`}>
       <a href="/" className="plus-contact-us">+</a>
@@ -105,10 +105,14 @@ const NavBar = ({ disableScrollEffect, username, setUsername }) => {
         </h1>
       </a>
       <div className="icons">
-        {isLoggedIn ? (
-          <div className="user-menu">
-            <span className="greeting" onClick={() => setShowDropdown((prev) => !prev)}>
-              Hi, {username} <img src={assets.user_icon} alt="" />
+      {isLoggedIn ? (
+          <div 
+            className="user-menu"
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={() => setShowDropdown(false)}
+          >
+            <span className="greeting">
+              Hi, {username} <img src={assets.user_icon} alt="User Icon" />
             </span>
             {showDropdown && (
               <div className="dropdown-menu">

@@ -1,6 +1,7 @@
 .orders-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 5rem auto;
+    top: 2rem;
     padding: 20px;
     background: #f9f9f9;
     border-radius: 8px;
@@ -47,6 +48,7 @@
   }
   
   .no-orders {
+    margin-top: 100px; /* Adjust the value as needed */
     text-align: center;
     font-size: 1.2rem;
     color: #555;

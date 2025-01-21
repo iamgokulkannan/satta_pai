@@ -15,7 +15,7 @@ function ProductDetails({ username, setUsername, productId }) {
 
   useEffect(() => {
     if (product) {
-      document.title = product.name + " - Satta Pai";
+      document.title = product.name + " | Satta Pai";
     }
   }, [product]);
 

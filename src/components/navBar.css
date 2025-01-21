@@ -210,6 +210,10 @@ a {
   cursor: pointer;
 }
 
+.hiName {
+  margin-top: -1rem;
+}
+
 .greeting {
   font-size: 1rem;
   font-weight: bold;

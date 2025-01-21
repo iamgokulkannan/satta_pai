@@ -128,24 +128,23 @@ const Checkout = ({username , setUsername}) => {
             <input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label>Payment Method:</label>
-            <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
-              <option value="cod">Cash on Delivery</option>
-              <option value="online">Online Payment</option>
-            </select>
-          </div>
-        </form>
+          <label>Payment Method:</label>
+          <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
+            <option value="cod">Cash on Delivery</option>
+            <option value="online">Online Payment</option>
+          </select>
+      <div className="checkout-button-wrapper">
+        {formData.paymentMethod !== 'cod' && (
+          <button type="submit" className="checkout-button">Proceed to Payment</button>
+        )}
+        {formData.paymentMethod === 'cod' && (
+          <button type="submit" className="checkout-button">Place Order</button>
+        )}
       </div>
-      <Footer />
-        <div className="checkout-button-wrapper">
-          {/* Conditionally render the button */}
-          {formData.paymentMethod !== 'cod' && (
-            <button type="submit" className="checkout-button">Proceed to Payment</button>
-          )}
-          {formData.paymentMethod === 'cod' && (
-            <button type="submit" className="checkout-button">Place Order</button>
-          )}
         </div>
+      </form>
+    </div>
+    <Footer />
     </div>
   );
 };

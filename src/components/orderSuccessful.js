@@ -1,61 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getFirestore, collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import NavBar from './navBar';
 import Footer from './footer';
 import './orderSuccessful.css';
 
-const OrderSuccessful = () => {
+const OrderSuccessful = ({ username, setUsername }) => {
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
+  const [products, setProducts] = useState([]); // State to store fetched products
 
   useEffect(() => {
-    const order = JSON.parse(localStorage.getItem('orderDetails'));
-    if (!order) {
-      navigate('/'); // Redirect to home if there's no order
-    } else {
-      setOrderDetails(order);
-    }
+    const fetchOrderDetails = async () => {
+      const db = getFirestore();
+      const auth = getAuth();
+      const user = auth.currentUser;
+    
+      if (!user) {
+        alert('You must be logged in to view your orders.');
+        navigate('/login');
+        return;
+      }
+    
+      try {
+        const ordersRef = collection(db, 'orders');
+        const q = query(
+          ordersRef,
+          where('userId', '==', user.uid),
+          orderBy('timestamp', 'desc'),
+          limit(1)
+        );
+    
+        const querySnapshot = await getDocs(q);
+    
+        if (!querySnapshot.empty) {
+          const latestOrder = querySnapshot.docs[0].data();
+          setOrderDetails(latestOrder);
+        } else {
+          console.error('No orders found for this user');
+          navigate('/');
+        }
+      } catch (error) {
+        if (error.code === 'failed-precondition') {
+          console.error(
+            'The required index is not ready yet. Please wait until it is built in the Firebase Console.'
+          );
+          alert(
+            'The required index is still building. Please try again later. Visit the Firebase Console for more information.'
+          );
+        } else {
+          console.error('Error fetching order details:', error);
+        }
+        navigate('/');
+      }
+    };
+
+    fetchOrderDetails();
   }, [navigate]);
 
   return (
     <div>
-      <NavBar />
+      <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
       <div className="order-confirmation">
         <h1>Order Confirmation</h1>
         {orderDetails ? (
           <div className="order-summary">
             <h2>Order Summary</h2>
-            <div className="order-items">
-              {orderDetails.cartItems.map((item, index) => (
-                <div key={index} className="order-item">
-                  <img src={item.image} alt={item.name} />
-                  <div className="order-item-details">
-                    <p>{item.name}</p>
-                    <p>Size: {item.size}</p>
-                    <p>Quantity: {item.quantity}</p>
-                    <p>Price: Rs. {item.price}.00</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="order-total">
-              <h3>Total: Rs. {orderDetails.totalCost}.00</h3>
-            </div>
+            <p><strong>Order ID:</strong> {orderDetails.orderId}</p>
+            <p><strong>Total Cost:</strong> ₹{orderDetails.total}</p>
+            <p><strong>Address:</strong> {orderDetails.address}</p>
 
-            <div className="user-details">
-              <h3>Shipping Information</h3>
-              <p>Name: {orderDetails.userDetails.name}</p>
-              <p>Address: {orderDetails.userDetails.address}</p>
-              <p>Phone: {orderDetails.userDetails.phone}</p>
-              <p>Email: {orderDetails.userDetails.email}</p>
-            </div>
-
-            <button onClick={() => navigate('/')} className="continue-shopping">
-              Continue Shopping
-            </button>
+            <h3>Products:</h3>
+            {products.length > 0 ? (
+              <ul>
+                {products.map(product => (
+                  <li key={product.id}>
+                    <p><strong>Name:</strong> {product.name}</p>
+                    <p><strong>Price:</strong> ₹{product.price}</p>
+                    <p><strong>Description:</strong> {product.description}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Loading products...</p>
+            )}
           </div>
         ) : (
-          <p>Loading...</p>
+          <p>Loading order details...</p>
         )}
       </div>
       <Footer />

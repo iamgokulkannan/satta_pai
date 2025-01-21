@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import './order.css';
+import NavBar from './navBar';
 
-const Orders = () => {
+const Orders = ({username,setUsername}) =>  {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -28,8 +29,8 @@ const Orders = () => {
         }));
         setOrders(userOrders);
       } catch (error) {
-        console.error('Error fetching orders:', error);
         setError('Failed to fetch orders. Please try again later.');
+        console.error('Error fetching orders:', error);
       } finally {
         setLoading(false);
       }
@@ -46,11 +47,27 @@ const Orders = () => {
     return <p className="error-message">{error}</p>;
   }
 
+  if (error) {
+    return (
+      <>
+        <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
+        <p className="error-message">{error}</p>
+      </>
+    );
+  }
+
   if (orders.length === 0) {
-    return <p className="no-orders">No orders found.</p>;
+    return (
+      <>
+        <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
+        <p className="no-orders">No orders found.</p>
+      </>
+    );
   }
 
   return (
+    <>
+    <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
     <div className="orders-container">
       <h1>Your Orders</h1>
       <ul className="orders-list">
@@ -73,6 +90,7 @@ const Orders = () => {
         ))}
       </ul>
     </div>
+    </>
   );
 };
 
