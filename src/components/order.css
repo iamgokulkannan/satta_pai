@@ -1,55 +1,123 @@
+/* Orders Page Container */
 .orders-container {
-    max-width: 800px;
-    margin: 5rem auto;
-    top: 2rem;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 5rem auto;
+  padding: 25px;
+  background: linear-gradient(135deg, #f9f9f9, #eef1f5);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Orders Page Heading */
+.orders-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Orders List */
+.orders-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Each Order Card */
+.order-item {
+  background: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Ensures spacing between elements */
+}
+
+.order-item:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+
+/* Order ID Styling */
+.order-item h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #444;
+  word-wrap: break-word; /* Ensures long text wraps properly */
+  overflow-wrap: break-word;
+}
+
+/* Order Details */
+.order-item p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #666;
+  white-space: normal; /* Ensures text wraps */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Order Items Section */
+.order-items h3 {
+  margin: 15px 0 5px;
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: bold;
+}
+
+/* Order Items List */
+.order-items ul {
+  list-style: square;
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-items li {
+  font-size: 1rem;
+  color: #555;
+  padding: 4px 0;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+/* No Orders Message */
+.no-orders {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #777;
+  margin-top: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orders-container {
+      padding: 15px;
+      margin: 3rem auto;
   }
-  
-  .orders-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .orders-list {
-    list-style: none;
-    padding: 0;
-  }
-  
+
   .order-item {
-    background: white;
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 15px;
   }
-  
-  .order-item h2 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
+
+  .orders-container h1 {
+      font-size: 1.8rem;
   }
-  
-  .order-items h3 {
-    margin: 15px 0 5px;
-    font-size: 1rem;
-  }
-  
-  .order-items ul {
-    list-style: square;
-    margin: 0;
-    padding-left: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-  }
-  
-  .no-orders {
-    margin-top: 100px; /* Adjust the value as needed */
-    text-align: center;
-    font-size: 1.2rem;
-    color: #555;
-  }
+}

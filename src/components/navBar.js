@@ -4,6 +4,7 @@ import './navBar.css';
 import { assets } from '../assets/images/assets'; // Adjust the import as needed
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
+
 const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
   const [isVisible, setIsVisible] = useState(false);
   const introTextRef = useRef(null);

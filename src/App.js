@@ -17,7 +17,7 @@ import Login from './components/login';
 import Signup from './signup';
 import Orders from './components/order';
 import './App.css';
-
+import Lenis from 'lenis'
 
 function App() {
   const [username, setUsername] = useState('');
@@ -35,6 +35,18 @@ function App() {
     const { productId } = useParams();
     return <ProductDetails productId={productId} addToCart={addToCart} username={username} setUsername={setUsername} />;
   }
+
+  // Initialize Lenis
+  const lenis = new Lenis({
+    autoRaf: true,
+  });
+  // Use requestAnimationFrame to continuously update the scroll
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
 
   return (
     <Router>

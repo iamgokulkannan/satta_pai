@@ -37,7 +37,7 @@
 
 .nav-text:hover,
 .logo:hover {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 a {
@@ -50,7 +50,7 @@ a {
 }
 
 .logo-link:hover, .nav-text-link:hover {
-  cursor: pointer; /* Show pointer when hovered */
+  cursor: pointer !important; /* Show pointer when hovered */
 }
 
 .contact-us,
@@ -94,7 +94,7 @@ a {
 }
 
 .icons img:hover{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 /* Default styles for larger screens */
@@ -145,11 +145,11 @@ a {
     justify-content: space-between;
     width: 2rem;
     height: 1.5rem;
-    cursor: pointer;
+    cursor: pointer !important;
     position: absolute; /* Positioned at the top-right */
     top: 1.5rem;
     right: 1rem;
-    z-index: 10001; /* Ensure it's above other content */
+    z-index: 2000; /* Ensure it's above other content */
   }
 
   .icons {
@@ -198,7 +198,7 @@ a {
   color: white;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .popup button:hover {
@@ -207,7 +207,7 @@ a {
 
 .user-menu {
   position: relative;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .hiName {
@@ -237,7 +237,7 @@ a {
   border: none;
   background: none;
   text-align: left;
-  cursor: pointer;
+  cursor: pointer !important;
   font-size: 1rem;
 }
 

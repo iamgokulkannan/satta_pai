@@ -26,3 +26,7 @@ yarn-error.log*
 .env
 webpack.config.js
 userContext.js
+
+locahost.pem
+locahost-key.pem
+src/server.js
