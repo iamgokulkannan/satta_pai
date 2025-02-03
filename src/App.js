@@ -14,7 +14,7 @@ import Checkout from './components/checkout';
 import ProductPage from './components/productPage';
 import OrderSuccessful from './components/orderSuccessful';
 import Login from './components/login';
-import Signup from './signup';
+import Signup from './components/signup';
 import Orders from './components/order';
 import './App.css';
 import Lenis from 'lenis'

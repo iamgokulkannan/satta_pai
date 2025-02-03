@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, deleteUser , updateProfile } from 'firebase/auth';
+import { getAuth, deleteUser, updateProfile } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './profile.css';
@@ -11,6 +11,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
   const db = getFirestore();
   const user = auth.currentUser;
 
+  const [inputUsername, setInputUsername] = useState(username);
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -24,6 +25,7 @@ const Profile = ({ username, setUsername, setLoading }) => {
           if (docSnapshot.exists()) {
             const data = docSnapshot.data();
             setUsername(data.username || '');
+            setInputUsername(data.username || '');
             setAddress(data.address || '');
             setPhone(data.phone || '');
           }
@@ -43,16 +45,17 @@ const Profile = ({ username, setUsername, setLoading }) => {
       if (user) {
         // Update Firebase Auth displayName
         await updateProfile(user, {
-          displayName: username,
+          displayName: inputUsername,
         });
-  
+
         // Update Firestore document
         const userDoc = doc(db, 'users', user.uid);
-        await setDoc(userDoc, { username, address, phone }, { merge: true });
-  
+        await setDoc(userDoc, { username: inputUsername, address, phone }, { merge: true });
+
+        setUsername(inputUsername);
         setSuccessMessage('Profile updated successfully!');
-        console.log('Updated values:', { username, address, phone });
-  
+        console.log('Updated values:', { inputUsername, address, phone });
+
         // Optionally, re-fetch data to reflect changes
         const docSnapshot = await getDoc(userDoc);
         if (docSnapshot.exists()) {
@@ -82,40 +85,40 @@ const Profile = ({ username, setUsername, setLoading }) => {
   return (
     <>
       <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
-    <div className="profile-container">
-      <h1>Profile</h1>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      <form>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+      <div className="profile-container">
+        <h1>Profile</h1>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        <form>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={inputUsername}
+            onChange={(e) => setInputUsername(e.target.value)}
           />
 
-        <label htmlFor="address">Address:</label>
-        <textarea
-          id="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          <label htmlFor="address">Address:</label>
+          <textarea
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
 
-        <label htmlFor="phone">Phone Number:</label>
-        <input
-          type="text"
-          id="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          <label htmlFor="phone">Phone Number:</label>
+          <input
+            type="text"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
 
-        <button type="button" onClick={handleSave}>
-          Save
-        </button>
-      </form>
-      <button onClick={handleDeleteAccount}>Delete Account</button>
-    </div>
-          </>
+          <button type="button" onClick={handleSave}>
+            Save
+          </button>
+        </form>
+        <button onClick={handleDeleteAccount}>Delete Account</button>
+      </div>
+    </>
   );
 };
 

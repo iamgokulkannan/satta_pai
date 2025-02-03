@@ -4,15 +4,17 @@ import NavBar from './navBar';
 import Footer from './footer';
 import { assets } from '../assets/images/assets';
 import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Firestore imports
-import { getAuth } from 'firebase/auth'; // For authenticated user's ID
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // For authenticated user's ID
 import './checkout.css';
 
-const Checkout = ({username , setUsername}) => {
+const Checkout = ({ username, setUsername }) => {
   const navigate = useNavigate();
   const location = useLocation(); // Access the location object to get state
   const db = getFirestore();
   const auth = getAuth();
-  const user = auth.currentUser;
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -26,22 +28,20 @@ const Checkout = ({username , setUsername}) => {
   const totalCost = location.state?.totalCost || 0; // Fallback to 0 if no state is passed
   const items = location.state?.items || []; // Fallback to an empty array if no items are passed
 
-  // Dynamically load Razorpay script
   useEffect(() => {
-    if (!user) {
-      alert('You need to be logged in to place an order.');
-      navigate('/login');
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
+    setLoading(true);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        alert('You need to be logged in to place an order.');
+        navigate('/login');
+      }
+      setLoading(false);
+    });
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [user, navigate]);
+    return () => unsubscribe();
+  }, [auth, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,6 +61,7 @@ const Checkout = ({username , setUsername}) => {
 
       await addDoc(collection(db, 'orders'), orderData);
       alert('Order placed successfully!');
+      localStorage.removeItem('cart'); // Clear the cart after order is placed
       navigate('/orderSuccessful');
     } catch (error) {
       console.error('Error saving order:', error.message);
@@ -121,30 +122,30 @@ const Checkout = ({username , setUsername}) => {
           </div>
           <div className="form-group">
             <label>Phone Number:</label>
-            <input type="text" name="phone" value={formData.phone} onChange={handleChange} required />
+            <input type="number" name="phone" value={formData.phone} onChange={handleChange} required  />
           </div>
           <div className="form-group">
             <label>Email:</label>
             <input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="form-group">
-          <label>Payment Method:</label>
-          <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
-            <option value="cod">Cash on Delivery</option>
-            <option value="online">Online Payment</option>
-          </select>
-      <div className="checkout-button-wrapper">
-        {formData.paymentMethod !== 'cod' && (
-          <button type="submit" className="checkout-button">Proceed to Payment</button>
-        )}
-        {formData.paymentMethod === 'cod' && (
-          <button type="submit" className="checkout-button">Place Order</button>
-        )}
+            <label>Payment Method:</label>
+            <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
+              <option value="cod">Cash on Delivery</option>
+              <option value="online">Online Payment</option>
+            </select>
+          </div>
+          <div className="checkout-button-wrapper">
+            {formData.paymentMethod !== 'cod' && (
+              <button type="submit" className="checkout-button">Proceed to Payment</button>
+            )}
+            {formData.paymentMethod === 'cod' && (
+              <button type="submit" className="checkout-button">Place Order</button>
+            )}
+          </div>
+        </form>
       </div>
-        </div>
-      </form>
-    </div>
-    <Footer />
+      <Footer />
     </div>
   );
 };

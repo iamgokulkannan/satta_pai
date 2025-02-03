@@ -1,33 +1,37 @@
+/* ===== Product Details Page Layout ===== */
 .product-details {
-  margin-top: 60px;
+  margin-top: 60px; /* Adds space above the product details */
   padding: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Aligns images and details in a row */
   position: relative;
 }
 
+/* ===== Product Image Styling ===== */
 .product-details img {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
-  cursor: pointer;
+  cursor: pointer; /* Changes cursor to pointer for better UX */
 }
 
+/* ===== Zoom Effect for Main Product Image ===== */
 .product-details .zoomed {
   position: absolute;
   top: 0;
   left: 0;
-  width: 600px; /* Set zoom square to 600px */
-  height: 600px; /* Set zoom square to 600px */
-  background-size: 1200px 1200px; /* Double the size of the image for proper zoom */
+  width: 600px; /* Defines the zoomed image size */
+  height: 600px;
+  background-size: 1200px 1200px; /* Ensures zoomed image is twice the size */
   background-repeat: no-repeat;
   border: 1px solid #ddd;
   pointer-events: none;
-  display: none; /* Hidden initially */
+  display: none; /* Initially hidden */
 }
 
+/* ===== Product Details Section ===== */
 .details {
-  margin-top: -2.7rem;
+  margin-top: -2.7rem; /* Adjusts positioning slightly */
   font-family: quicksand;
   margin-left: 3rem;
   display: flex;
@@ -45,11 +49,12 @@
   margin: 5px 0;
 }
 
+/* ===== Side Thumbnail Images Styling ===== */
 .product-images {
   display: flex;
   position: relative;
   padding-right: 2rem;
-  flex-direction: column;
+  flex-direction: column; /* Arranges thumbnails in a vertical column */
 }
 
 .product-details img {
@@ -57,7 +62,7 @@
   height: 600px;
   width: 600px;
   border: 0.5px solid black;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out; /* Smooth transition on hover */
 }
 
 .product-images img {
@@ -67,10 +72,12 @@
   cursor: pointer;
 }
 
+/* ===== Main Product Image Container ===== */
 .main-image-container {
   position: relative;
 }
 
+/* ===== Size Selection Buttons ===== */
 .size-button {
   width: 3.5rem;
   background-color: white;
@@ -82,39 +89,31 @@
   cursor: pointer;
 }
 
+/* Selected Size Button */
 .size-button.selected {
   background-color: black;
   color: white;
 }
+
+/* Hover Effect for Size Buttons */
 .size-button:hover {
   background-color: black;
   color: white;
 }
 
+/* ===== Size Selection Container ===== */
 .button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.button {
-  
-  display: flex;
-  flex-direction: row;
-}
-
-.button .p {
-  margin-top: 100px;
-}
-
-.size {
-  margin-bottom: 10px;
-}
-
-.discounted-price{
+/* ===== Discounted Price Styling ===== */
+.discounted-price {
   font-weight: 600;
 }
 
+/* Sale Badge */
 .sale-box {
   background-color: black;
   color: white;
@@ -124,11 +123,13 @@
   border-radius: 7px;
 }
 
-.shipping p{
+/* ===== Shipping Information Styling ===== */
+.shipping p {
   margin-top: 10px;
   font-size: 13px;
 }
 
+/* Underlined Shipping Text */
 .underline {
   text-decoration: underline;
 }
@@ -137,40 +138,39 @@
   cursor: pointer;
 }
 
+/* ===== Quantity Selector Styling ===== */
 .quantity-container {
   display: flex;
   align-items: center;
 }
 
+/* Quantity Wrapper */
 .quantity-wrapper {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
+/* Quantity Buttons */
 .quantity-buttons {
   display: flex;
   align-items: center;
 }
 
-.quantity-button {
-  margin: 0 5px;
-}
-
+/* Quantity Box Styling */
 .quantity-container-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black; /* Light gray border */
+  border: 1px solid black; /* Adds a black border */
   border-radius: 8px; /* Rounded corners */
-  padding: 1px 1px; /* Padding around the content */
-  width: fit-content; /* Fit content size */
-  height: 40px; /* Set fixed height */
+  padding: 1px 1px;
+  width: fit-content;
+  height: 40px; /* Fixed height */
   margin-left: 10px;
 }
 
-/* Your existing styles */
-
+/* Quantity Buttons */
 .quantity-button {
   width: 50px;
   height: 30px;
@@ -182,10 +182,12 @@
   background-color: transparent;
 }
 
+/* Disabled Button Styling */
 .quantity-button:disabled {
   cursor: not-allowed;
 }
 
+/* Input for Quantity */
 .quantity-input {
   width: 40px;
   text-align: center;
@@ -195,6 +197,7 @@
   outline: none;
 }
 
+/* ===== Add to Cart and Checkout Buttons ===== */
 .add-to-cart-button,
 .checkout-button {
   padding: 1rem;
@@ -204,41 +207,46 @@
   border-radius: 10px;
   background-color: white;
   color: black;
-  border: 2px solid black; /* Set border width to 2px */
+  border: 2px solid black; /* Adds a border */
 }
 
-.add-to-cart-button{
+/* Margin Adjustments */
+.add-to-cart-button {
   margin-top: 10px;
 }
+
 .checkout-button {
   margin-top: 5px;
   background-color: black;
   color: white;
 }
 
+/* Hover Effect for Buttons */
 .add-to-cart-button:hover,
 .checkout-button:hover {
   cursor: pointer;
-  box-shadow: 0 0 0 1px black; /* Creates a hover effect without changing dimensions */
+  box-shadow: 0 0 0 1px black; /* Adds a subtle shadow effect */
 }
 
-.product-additional-details{
+/* ===== Product Additional Details Section ===== */
+.product-additional-details {
   margin-top: 10px;
 }
 
-.promoting{
+/* ===== Recommended Products Section ===== */
+.promoting {
   margin: 2rem;
   font-family: quicksand;
   font-size: 2rem;
   font-weight: 700;
 }
-.youMayAlso{
-  margin-left: 60px;
 
+.youMayAlso {
+  margin-left: 60px;
 }
 
-
-.promoting-products{
+/* Container for Recommended Products */
+.promoting-products {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -246,15 +254,77 @@
   justify-content: center;
 }
 
-.promoting-products img{
+/* Individual Product Thumbnails */
+.promoting-products img {
   width: 300px;
   height: 300px;
   margin-right: 10px;
   border: 1px solid black;
-  transition: transform 0.4s ease-in-out; /* Add a smooth transition effect */
+  transition: transform 0.4s ease-in-out; /* Smooth hover effect */
 }
 
-.promoting-products img:hover{
-  transform: scale(0.9); /* Scale the image up slightly on hover */
+/* Hover Effect for Recommended Products */
+.promoting-products img:hover {
+  transform: scale(0.9);
   cursor: pointer;
+}
+
+/* Click Effect for Recommended Products */
+.promoting-products img:active {
+  transform: scale(0.8);
+}
+
+/* ===== Comments Section Styling ===== */
+.comments-section {
+  margin-top: 30px; /* Adds space above the comments section */
+  padding: 20px;
+  border-top: 1px solid #ddd; /* Creates a separator from the product details */
+}
+/* ===== Comment Input Field ===== */
+.comments-section textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: none; /* Prevents resizing */
+}
+.comments-section button:hover {
+  opacity: 0.8;
+}
+
+/* ===== Individual Comment Styling ===== */
+.comment {
+  background-color: #f9f9f9; /* Light gray background for better readability */
+  padding: 10px;
+  border-radius: 8px; /* Slightly rounded corners */
+  margin-bottom: 10px;
+}
+.comment button {
+  margin-left: 10px;
+}
+.comment p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.comment strong {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+/* Add space below the Post Comment button */
+.comments-section button {
+  margin-top: 10px;
+  margin-bottom: 15px; /* Adds space below the button */
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  background-color: black;
+  color: white;
+  
 }
