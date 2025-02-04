@@ -3,8 +3,10 @@ import { db } from '../firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { useParams, useNavigate } from 'react-router-dom';
 import './comments.css';
+import NavBar from './navBar';
+import Footer from './footer';
 
-const CommentsPage = () => {
+const CommentsPage = ({ username, setUsername}) => {
     const { productId } = useParams();  // Get productId from URL
     const navigate = useNavigate();
     const [comments, setComments] = useState([]);
@@ -21,6 +23,8 @@ const CommentsPage = () => {
     }, [productId]);
 
     return (
+        <>
+            <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
         <div className="comments-section">
             <h2>All Reviews</h2>
             <button onClick={() => navigate(-1)}>Go Back</button>
@@ -40,6 +44,8 @@ const CommentsPage = () => {
                 )}
             </div>
         </div>
+        <Footer/>
+        </>
     );
 };
 

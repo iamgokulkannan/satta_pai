@@ -76,7 +76,7 @@ function App() {
           <Route path="/login" element={<Login  username={username} setUsername={setUsername} />} />
           <Route path="/signup" element={<Signup username={username} setUsername={setUsername} />} />
           <Route path="/orders" element={<Orders username={username} setUsername={setUsername} />} />
-          <Route path="/comments/:productId" element={<CommentsPage />} />
+          <Route path="/comments/:productId" element={<CommentsPage username={username} setUsername={setUsername} />} />
         </Routes>
       </div>
     </Router>
