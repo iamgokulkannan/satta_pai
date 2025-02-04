@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import './productDetails.css';
 import NavBar from './navBar';
 import Comments from './comments';
+import Footer from './footer';
 
 function ProductDetails({ username, setUsername, productId }) {
   const product = products.find((p) => p._id === productId); // Find product by ID
   const navigate = useNavigate(); 
-
   const [selectedImage, setSelectedImage] = useState(product?.image || ''); // Initialize state for selected image
   const [zoomStyle, setZoomStyle] = useState({});
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -197,6 +198,7 @@ function ProductDetails({ username, setUsername, productId }) {
             ))}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

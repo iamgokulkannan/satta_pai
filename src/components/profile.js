@@ -42,34 +42,42 @@ const Profile = ({ username, setUsername, setLoading }) => {
 
   const handleSave = async () => {
     try {
-      if (user) {
-        // Update Firebase Auth displayName
-        await updateProfile(user, {
-          displayName: inputUsername,
-        });
+        if (user) {
+            const userDocRef = doc(db, 'users', user.uid);
+            const userSnapshot = await getDoc(userDocRef);
 
-        // Update Firestore document
-        const userDoc = doc(db, 'users', user.uid);
-        await setDoc(userDoc, { username: inputUsername, address, phone }, { merge: true });
+            if (userSnapshot.exists()) {
+                // Update Firebase Auth displayName
+                await updateProfile(user, { displayName: inputUsername });
 
-        setUsername(inputUsername);
-        setSuccessMessage('Profile updated successfully!');
-        console.log('Updated values:', { inputUsername, address, phone });
+                // Update Firestore document
+                await setDoc(userDocRef, {
+                    username: inputUsername,
+                    address,
+                    phone
+                }, { merge: true });
 
-        // Optionally, re-fetch data to reflect changes
-        const docSnapshot = await getDoc(userDoc);
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          setUsername(data.username || '');
-          setAddress(data.address || '');
-          setPhone(data.phone || '');
+                setUsername(inputUsername);
+                setSuccessMessage('Profile updated successfully!');
+                console.log('Updated values:', { inputUsername, address, phone });
+
+                // Fetch updated data from Firestore
+                const updatedSnapshot = await getDoc(userDocRef);
+                if (updatedSnapshot.exists()) {
+                    const data = updatedSnapshot.data();
+                    setUsername(data.username || '');
+                    setAddress(data.address || '');
+                    setPhone(data.phone || '');
+                }
+            } else {
+                console.error('User document does not exist in Firestore.');
+            }
         }
-      }
     } catch (error) {
-      console.error('Error updating profile:', error.message);
+        console.error('Error updating profile:', error.message);
     }
     navigate('/');
-  };
+};
 
   const handleDeleteAccount = () => {
     const user = auth.currentUser;
