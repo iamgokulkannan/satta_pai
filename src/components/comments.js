@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { db } from '../firebase';
 import { getAuth } from 'firebase/auth';
-import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, limit } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, limit, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { products } from '../assets/images/assets';
 import './comments.css';
@@ -11,6 +11,7 @@ const Comments = ({ username, productId }) => {
     const user = auth.currentUser;
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
+    const editFileInputRef = useRef(null);
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const product = products.find((p) => p._id === productId);
@@ -20,6 +21,9 @@ const Comments = ({ username, productId }) => {
     const [starRating, setStarRating] = useState(0);
     const [photo, setPhoto] = useState('');
     const [showCamera, setShowCamera] = useState(false);
+    const [editingComment, setEditingComment] = useState(null);
+    const [editedText, setEditedText] = useState('');
+    const [editedPhoto, setEditedPhoto] = useState('');
 
     // Fetch comments (limit to latest 5)
     const fetchComments = useCallback(async () => {
@@ -122,6 +126,26 @@ const Comments = ({ username, productId }) => {
         }
     };
 
+    // Delete a Comment
+    const handleDeleteComment = async (commentId) => {
+        await deleteDoc(doc(db, 'comments', commentId));
+        fetchComments();
+    };
+
+    // Edit Comment
+    const handleEditComment = async (commentId) => {
+        const updateData = { text: editedText };
+        if (editedPhoto !== '') {
+            updateData.photo = editedPhoto;
+        }
+
+        await updateDoc(doc(db, 'comments', commentId), updateData);
+        setEditingComment(null);
+        setEditedPhoto('');
+        fetchComments();
+    };
+         
+
     return (
         <div className="comments-section">
             <h3>Customer Reviews</h3>
@@ -169,13 +193,80 @@ const Comments = ({ username, productId }) => {
             <div className="comments-list">
                 {comments.map((comment) => (
                     <div key={comment.id} className="comment">
-                        <p><strong>{comment.username}</strong>: {comment.text}</p>
+                        {editingComment === comment.id ? (
+                            <>
+                                <textarea value={editedText} onChange={(e) => setEditedText(e.target.value)}></textarea>
 
-                        {/* Star Rating Display */}
-                        <p>Rating: {"★".repeat(comment.rating)}{"☆".repeat(5 - comment.rating)}</p>
+                                {/* Photo Editing Section - IMPROVED and CLARIFIED */}
+                                <div className="edit-photo-section">
+                                    <label>Edit Photo:</label>
 
-                        {/* Display Base64 Photo */}
-                        {comment.photo && <img src={comment.photo} alt="CommentPhoto" className="comment-photo" />}
+                                    {/* Display Existing Photo if available */}
+                                    {comment.photo && !editedPhoto && (
+                                        <div className="existing-photo">
+                                            <img src={comment.photo} alt="Existing Comment Photo" className="comment-photo" />
+                                            <button onClick={() => setEditedPhoto('')}>Remove Photo</button> {/* Keep remove button - Label is clear now */}
+                                        </div>
+                                    )}
+
+                                    {/* Display New Photo to be updated */}
+                                    {editedPhoto && <img src={editedPhoto} alt="New Comment Photo" className="comment-photo" />}
+
+
+                                    {/* Option to Change/Replace Photo - Clear Label */}
+                                    <button onClick={() => editFileInputRef.current.click()}>Change Photo</button>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                reader.readAsDataURL(file);
+                                                reader.onload = () => {
+                                                    setEditedPhoto(reader.result);
+                                                };
+                                            }
+                                        }}
+                                        ref={editFileInputRef}
+                                        style={{ display: 'none' }}
+                                    />
+
+                                    {/* Option to Add Photo if no existing photo AND no new photo selected yet - Clear Label */}
+                                    {!comment.photo && !editedPhoto && (
+                                        <button onClick={() => editFileInputRef.current.click()}>Add Photo</button>
+                                    )}
+
+                                    {/* Option to Keep Existing Photo - Explicit Button if user has selected a *new* photo */}
+                                    {comment.photo && editedPhoto && (
+                                        <button onClick={() => setEditedPhoto('')}>Keep Existing Photo</button>
+                                    )}
+                                </div>
+
+
+                                <button onClick={() => handleEditComment(comment.id)}>Save</button>
+                                <button onClick={() => setEditingComment(null)}>Cancel</button>
+                            </>
+                        ) : (
+                            <>
+                                <p><strong>{comment.username}</strong>: {comment.text}</p>
+                                <p>Rating: {"★".repeat(comment.rating)}{"☆".repeat(5 - comment.rating)}</p>
+
+                                {/* Display Photo */}
+                                {comment.photo && <img src={comment.photo} alt="CommentPhoto" className="comment-photo" />}
+
+                                {comment.username === username && (
+                                    <>
+                                        <button onClick={() => {
+                                            setEditingComment(comment.id);
+                                            setEditedText(comment.text);
+                                            setEditedPhoto(comment.photo || '');
+                                        }}>Edit</button>
+                                        <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                    </>
+                                )}
+                            </>
+                        )}
                     </div>
                 ))}
             </div>
