@@ -73,38 +73,61 @@ const Checkout = ({ username, setUsername }) => {
     e.preventDefault();
 
     if (formData.paymentMethod === 'cod') {
-      // Save the order for Cash on Delivery
-      saveOrderToFirestore();
+        // Save the order for Cash on Delivery
+        saveOrderToFirestore();
     } else {
-      // Razorpay Online Payment
-      const options = {
-        key: 'rzp_test_NaBWqfY1b83Kid',
-        amount: totalCost * 100, // Razorpay requires the amount in paise (cents)
-        currency: 'INR',
-        name: 'Satta Pai',
-        description: 'Payment Transaction',
-        image: assets.logo,
-        handler: function (response) {
-          // Save the order after successful payment
-          saveOrderToFirestore(response);
-        },
-        prefill: {
-          name: formData.name,
-          email: formData.email,
-          contact: formData.phone,
-        },
-        notes: {
-          address: formData.address,
-        },
-        theme: {
-          color: '#3399cc',
-        },
-      };
+        if (!window.Razorpay) {
+            alert("Razorpay SDK not loaded. Please check your connection.");
+            return;
+        }
 
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
+        const options = {
+            key: process.env.REACT_APP_RAZORPAY_KEY || 'rzp_test_NaBWqfY1b83Kid',
+            amount: Math.round(parseFloat(totalCost) * 100), 
+            currency: 'INR',
+            name: 'Satta Pai',
+            description: 'Payment Transaction',
+            image: assets.logo,
+            handler: function (response) {
+                // Only save the order if payment is successful
+                saveOrderToFirestore(response);
+            },
+            prefill: {
+                name: formData.name,
+                email: formData.email,
+                contact: formData.phone,
+            },
+            notes: {
+                address: formData.address,
+            },
+            theme: {
+                color: '#3399cc',
+            },
+            modal: {
+                ondismiss: function () {
+                    alert("Payment popup closed by the user.");
+                },
+            }
+        };
+
+        const rzp1 = new window.Razorpay(options);
+
+        // Handle payment failure
+        rzp1.on('payment.failed', function (response) {
+            alert(`Payment failed! Reason: ${response.error.description}`);
+            console.error("Payment Failed:", response);
+            // Order is NOT saved if payment fails
+        });
+
+        try {
+            rzp1.open();
+        } catch (error) {
+            console.error("Error initializing Razorpay:", error);
+            alert("Failed to initiate payment. Try again.");
+        }
     }
-  };
+};
+
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import NavBar from './navBar';
@@ -18,7 +19,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const db = getFirestore();
+const googleProvider = new GoogleAuthProvider();
 
 
 const Login = () => {
@@ -26,6 +28,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,21 +44,35 @@ const Login = () => {
             });
     };
 
-    const handleGoogleSignIn = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // Signed in
-                console.log('User signed in with Google:', result.user);
+    const handleGoogleSignIn = async () => {
+            setLoading(true);
+            setError('');
+            
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+        
+                await setDoc(doc(db, 'users', user.uid), {
+                    username: user.displayName || '',
+                    email: user.email,
+                    phone: user.phoneNumber || '',
+                    uid: user.uid,
+                }, { merge: true });
+        
+                // alert('Signed in with Google!');
                 navigate('/');
-            })
-            .catch((error) => {
+            } catch (error) {
                 setError(error.message);
-                console.error('Error signing in with Google:', error);
-            });
-    };
+            } finally {
+                setLoading(false);
+            }
+        };
 
     const goToNavigate =() =>{
         navigate('/signup');
+    }
+    const goToNavigateForgetPassword =() =>{
+        navigate('/forgotPassword');
     }
 
     return (
@@ -89,7 +106,9 @@ const Login = () => {
             <button className="google-button" onClick={handleGoogleSignIn}>
                 Continue with Google
             </button>
+
             <p>Don't have an account? <span onClick={()=>goToNavigate()} className='signup'>Sign Up</span></p>
+            <p>Forget Password <span onClick={()=>goToNavigateForgetPassword()} className='signup'>reset</span></p>
         </div>
     </>
     );

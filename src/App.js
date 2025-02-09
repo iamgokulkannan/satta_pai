@@ -19,6 +19,7 @@ import Orders from './components/order';
 import './App.css';
 import Lenis from 'lenis'
 import CommentsPage from './components/commentsPage';
+import ForgotPassword from './components/forgotPassword';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -77,7 +78,8 @@ function App() {
           <Route path="/signup" element={<Signup username={username} setUsername={setUsername} />} />
           <Route path="/orders" element={<Orders username={username} setUsername={setUsername} />} />
           <Route path="/comments/:productId" element={<CommentsPage username={username} setUsername={setUsername} />} />
-        </Routes>
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          </Routes>
       </div>
     </Router>
   );
