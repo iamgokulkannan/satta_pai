@@ -36,3 +36,47 @@
   .checkout-button-wrapper button {
     margin-left: 0 !important;
   }
+
+  /* Media Queries for Responsive Design */
+  @media (max-width: 768px) {
+    .checkout-container {
+      margin-top: 3rem;
+      padding: 15px;
+      max-width: 100%;
+    }
+
+    .checkout-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 10px;
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .checkout-button-wrapper {
+      right: 0;
+      justify-content: center !important;
+    }
+
+    .checkout-button-wrapper button {
+      width: 100%;
+      margin: 0 !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .checkout-container {
+      margin-top: 2rem;
+      padding: 10px;
+    }
+
+    .checkout-container h2 {
+      font-size: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+  }

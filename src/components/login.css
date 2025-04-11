@@ -71,3 +71,48 @@
 .signup:hover{
     cursor: pointer;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .login-container {
+    margin: 15% auto;
+    width: 90%;
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .login-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-container input,
+  .signup-container input {
+    padding: 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .login-container button,
+  .signup-container button {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    margin: 20% auto;
+    width: 95%;
+    padding: 10px;
+  }
+
+  .login-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .login-container label {
+    font-size: 0.9rem;
+  }
+
+  .signup {
+    font-size: 0.9rem;
+  }
+}

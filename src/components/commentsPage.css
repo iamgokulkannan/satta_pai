@@ -20,3 +20,34 @@
     object-fit: cover;
     margin-top: 10px;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .rating {
+    gap: 3px;
+  }
+
+  .star {
+    font-size: 18px;
+  }
+
+  .comment-photo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rating {
+    gap: 2px;
+  }
+
+  .star {
+    font-size: 16px;
+  }
+
+  .comment-photo {
+    width: 60px;
+    height: 60px;
+  }
+}

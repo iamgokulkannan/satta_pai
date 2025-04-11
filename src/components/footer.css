@@ -1,6 +1,7 @@
 .footer{
     background-color: black;
     color: white;
+    padding: 2rem 1rem;
 }
 
 .footer-brand{
@@ -27,6 +28,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .updates-sign-up {
@@ -54,45 +57,46 @@
 }
 
 .input-container {
-    position: relative; /* Ensure the container is positioned relative */
-    width: 400px; /* Set the width of the input container */
+    position: relative;
+    width: 100%;
+    max-width: 400px;
 }
 
 .input-container input {
-    width: 100%; /* Match container width */
-    height: 40px; /* Set height */
-    border: 2px solid #ccc; /* Add a border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 0 15px; /* Add padding inside the input */
-    font-size: 1rem; /* Increase font size */
-    font-family: inherit; /* Use parent font */
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+    width: 100%;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 0 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin: 2rem 0;
     margin-top: 0rem;
-    box-sizing: border-box; /* Ensure padding and border are included in width */
+    box-sizing: border-box;
 }
 
 .input-container input:focus {
-    border-color: #000; /* Change border color on focus */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a glow effect */
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .input-container .submit-btn {
-    position: absolute; /* Position the button inside the container */
-    top: 0; /* Align button at the top of the container */
-    right: 0; /* Align button at the right of the container */
-    height: 40px; /* Match the input height */
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
     border: none;
-    border-radius: 0 5px 5px 0; /* Rounded corners for the right side */
-    background-color: #322f2f; /* Button background color */
-    color: white; /* Button text color */
-    font-size: 1rem; /* Font size */
-    font-family: inherit; /* Use parent font */
-    cursor: pointer; /* Pointer cursor on hover */
-    padding: 0 20px; /* Add horizontal padding */
+    border-radius: 0 5px 5px 0;
+    background-color: #322f2f;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    box-sizing: border-box; /* Ensure padding and border are included in width */
+    box-sizing: border-box;
 }
 
 .input-container .submit-btn:hover {
@@ -101,35 +105,40 @@
 }
 
 .input-container .submit-btn:active {
-    transform: scale(0.98); /* Slight shrink on click */
+    transform: scale(0.98);
 }
 
 .branding-and-links {
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center the entire section horizontally */
-    align-items: flex-start; /* Align items at the top */
-    margin: 2rem 0; /* Add vertical spacing */
-    gap: 3rem; /* Add space between branding and quick links */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 2rem 0;
+    gap: 3rem;
+    flex-wrap: wrap;
 }
 
 .branding {
     font-family: quicksand;
-    text-align: left; /* Align text to the left within branding */
+    text-align: left;
+    flex: 1;
+    min-width: 200px;
 }
 
 .quick-links {
     font-family: quicksand;
     display: flex;
-    flex-direction: column; /* Keep links stacked vertically */
-    text-align: left; /* Align text to the left */
+    flex-direction: column;
+    text-align: left;
+    flex: 1;
+    min-width: 200px;
 }
 
 .quick-links a {
-    margin-bottom: 0.5rem; /* Add space between links */
-    text-decoration: none; /* Remove underline from links */
-    color:#ccc;
-    font-size: 1rem; /* Set font size */
-    transition: color 0.3s ease; /* Add hover effect */
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: #ccc;
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
 .satta-pai{
     font-size: 2rem;
@@ -143,4 +152,68 @@
 .branding-text p{
     color:#ccc;
 
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .footer-brand {
+        font-size: 8rem;
+    }
+    
+    .updates-sign-up {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-brand {
+        font-size: 6rem;
+        letter-spacing: 0.2em;
+    }
+    
+    .updates-sign-up {
+        font-size: 1.3rem;
+    }
+    
+    .updates-text {
+        font-size: 0.8rem;
+    }
+    
+    .branding-and-links {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .branding, .quick-links {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .footer-brand {
+        font-size: 4rem;
+        letter-spacing: 0.1em;
+    }
+    
+    .updates-sign-up {
+        font-size: 1.1rem;
+    }
+    
+    .updates-text {
+        font-size: 0.7rem;
+    }
+    
+    .input-container {
+        max-width: 300px;
+    }
+    
+    .satta-pai, .quick-links p {
+        font-size: 1.5rem;
+    }
 }

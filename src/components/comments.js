@@ -106,8 +106,8 @@ const Comments = ({ productId }) => {
     };
 
     const handleAddComment = async () => {
-        if (!user) {
-            alert("You need to log in to post a comment.");
+        if(!user){
+            alert("You need to be logged in to post a comment.");
             return;
         }
 

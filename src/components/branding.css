@@ -1,17 +1,24 @@
 .brandings {
     display: grid;
-    grid-template-columns: repeat(3, 350px); /* Set columns to auto size */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 40px;
-    justify-content: center; /* Center the grid horizontally */
-    text-align: center; /* Center text in headers */
+    justify-content: center;
+    text-align: center;
     font-family: quicksand;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .brandings-column {
     background-color: #f4f4f4;
     padding: 20px 40px;
     border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.brandings-column:hover {
+    transform: translateY(-5px);
 }
 
 .brandings-column h2 {
@@ -23,12 +30,50 @@
     font-size: 17px;
     line-height: 1.6;
     color: black;
-    text-align: justify; /* Justify the text in the brandings-column */
+    text-align: justify;
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+    .brandings {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 30px;
+    }
+}
+
 @media (max-width: 768px) {
     .brandings {
-        grid-template-columns: 1fr; /* Stack the columns vertically on small screens */
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    .brandings-column {
+        padding: 15px 30px;
+    }
+    
+    .brandings-column h2 {
+        font-size: 20px;
+    }
+    
+    .brandings-column p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brandings {
+        padding: 15px;
+    }
+    
+    .brandings-column {
+        padding: 15px 20px;
+    }
+    
+    .brandings-column h2 {
+        font-size: 18px;
+    }
+    
+    .brandings-column p {
+        font-size: 15px;
     }
 }

@@ -61,3 +61,46 @@
     color: red;
     margin-bottom: 10px;
 }
+
+@media (max-width: 768px) {
+  .signup-container {
+    margin: 15% auto;
+    width: 90%;
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .signup-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .signup-container input {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .signup-button,
+  .google-signin-button {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    margin: 20% auto;
+    width: 95%;
+    padding: 10px;
+  }
+
+  .signup-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .signup-container label {
+    font-size: 0.9rem;
+  }
+
+  .error-message {
+    font-size: 0.9rem;
+  }
+}
