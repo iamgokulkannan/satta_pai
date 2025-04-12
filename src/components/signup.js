@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './signup.css';
 import NavBar from './navBar';
@@ -42,14 +42,20 @@ const Signup = () => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
     
+            // Check if this is the first user (admin)
+            const usersRef = collection(db, 'users');
+            const usersSnapshot = await getDocs(usersRef);
+            const isFirstUser = usersSnapshot.empty;
+    
             await setDoc(doc(db, 'users', user.uid), {
                 username: username,
                 email: email,
                 phone: phone,
                 uid: user.uid,
+                isAdmin: isFirstUser // First user becomes admin
             });
     
-            alert('User signed up and data saved!');
+            alert('User signed up successfully!');
             navigate('/');
         } catch (error) {
             setError(error.message);

@@ -20,6 +20,7 @@ import './App.css';
 import Lenis from 'lenis'
 import CommentsPage from './components/commentsPage';
 import ForgotPassword from './components/forgotPassword';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -79,7 +80,8 @@ function App() {
           <Route path="/orders" element={<Orders username={username} setUsername={setUsername} />} />
           <Route path="/comments/:productId" element={<CommentsPage username={username} setUsername={setUsername} />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
-          </Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
       </div>
     </Router>
   );
