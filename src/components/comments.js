@@ -21,8 +21,8 @@ const Comments = ({ productId }) => {
     const [photos, setPhotos] = useState([]);
     const [showCamera, setShowCamera] = useState(false);
     const [editingComment, setEditingComment] = useState(null);
-    const [commentsLimit, setCommentsLimit] = useState(5);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [commentsLimit] = useState(5);
+    const [loading, setLoading] = useState(true);
 
     // Fetch comments (limit to latest commentsLimit)
     const fetchComments = useCallback(async (append = false) => {

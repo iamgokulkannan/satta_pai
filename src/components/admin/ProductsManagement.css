@@ -13,7 +13,8 @@
 }
 
 .product-form input,
-.product-form textarea {
+.product-form textarea,
+.product-form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -25,6 +26,16 @@
 .product-form textarea {
     min-height: 100px;
     resize: vertical;
+}
+
+.product-form select {
+    background-color: white;
+    cursor: pointer;
+}
+
+.product-form select:focus {
+    outline: none;
+    border-color: #4CAF50;
 }
 
 .product-form button {

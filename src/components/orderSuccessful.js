@@ -9,7 +9,7 @@ import './orderSuccessful.css';
 const OrderSuccessful = ({ username, setUsername }) => {
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
-  const [products, setProducts] = useState([]); // State to store fetched products
+  const [products] = useState([]); // State to store fetched products
 
   useEffect(() => {
     const fetchOrderDetails = async () => {

@@ -9,9 +9,27 @@ import './cart.css';
 
 const Cart = ({ username, setUsername }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const auth = getAuth();
   const db = getFirestore();
+  const MAX_QUANTITY = 10;
+
+  const mergeCarts = (firebaseCart, localCart) => {
+    const mergedCart = [...localCart];
+    
+    firebaseCart.forEach(fbItem => {
+      const existingItem = mergedCart.find(item => item.id === fbItem.id);
+      if (existingItem) {
+        existingItem.quantity = Math.min(existingItem.quantity + fbItem.quantity, MAX_QUANTITY);
+      } else {
+        mergedCart.push(fbItem);
+      }
+    });
+    
+    return mergedCart;
+  };
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -20,63 +38,34 @@ const Cart = ({ username, setUsername }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUsername(currentUser.displayName || currentUser.email.split('@')[0]);
-        await syncCartWithFirebase(currentUser.uid);
+        
+        try {
+          const userCartRef = doc(db, 'carts', currentUser.uid);
+          const userCartDoc = await getDoc(userCartRef);
+          
+          if (userCartDoc.exists()) {
+            const firebaseCart = userCartDoc.data().items || [];
+            const mergedCart = mergeCarts(firebaseCart, storedCartItems);
+            
+            await setDoc(userCartRef, { items: mergedCart }, { merge: true });
+            localStorage.setItem('cart', JSON.stringify(mergedCart));
+            setCartItems(mergedCart);
+          } else {
+            await setDoc(userCartRef, { items: storedCartItems });
+          }
+        } catch (error) {
+          console.error('Error syncing cart:', error);
+          setError('Failed to sync cart with server');
+        }
+      } else {
+        localStorage.setItem('cart', JSON.stringify([]));
+        setCartItems([]);
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [auth, setUsername]);
-
-  const syncCartWithFirebase = async (userId) => {
-    if (!userId) return;
-
-    const localCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const userCartRef = doc(db, 'carts', userId);
-
-    try {
-      const userCartDoc = await getDoc(userCartRef);
-      let mergedCart = localCart;
-
-      if (userCartDoc.exists()) {
-        const existingCart = userCartDoc.data().items || [];
-
-        // 🚀 **Avoid Duplicate Merging**
-        if (JSON.stringify(existingCart) === JSON.stringify(localCart)) {
-          console.log('Cart already in sync, skipping merge.');
-          return;
-        }
-
-        mergedCart = mergeCarts(existingCart, localCart);
-      }
-
-      // ✅ **Update Firestore with merged cart (only if needed)**
-      if (mergedCart.length > 0) {
-        await setDoc(userCartRef, { items: mergedCart }, { merge: true });
-        console.log('Cart successfully synced with Firebase');
-      }
-
-      // 🔥 **Clear local storage only if Firebase has the cart**
-      localStorage.removeItem('cart');
-      setCartItems(mergedCart);
-    } catch (error) {
-      console.error('Error syncing cart with Firebase:', error.message);
-    }
-  };
-
-  const mergeCarts = (existingCart, newCart) => {
-    const mergedCart = [...existingCart];
-    newCart.forEach((newItem) => {
-      const existingItemIndex = mergedCart.findIndex(
-        (item) => item.productId === newItem.productId && item.size === newItem.size
-      );
-      if (existingItemIndex > -1) {
-        mergedCart[existingItemIndex].quantity += newItem.quantity;
-      } else {
-        mergedCart.push(newItem);
-      }
-    });
-    return mergedCart;
-  };
+  }, [auth, setUsername, db]);
 
   const handleImageClick = (productId) => {
     navigate(`/productDetails/${productId}`);
@@ -87,35 +76,50 @@ const Cart = ({ username, setUsername }) => {
     navigate(`/`);
   };
 
-  const removeFromCart = (productId, size) => {
-    const updatedCart = cartItems.filter(
-      (item) => !(item.productId === productId && item.size === size)
-    );
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    if (auth.currentUser) {
-      updateFirebaseCart(updatedCart);
+  const removeFromCart = async (productId, size) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedCart = cartItems.filter(
+        (item) => !(item.productId === productId && item.size === size)
+      );
+      setCartItems(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      if (auth.currentUser) {
+        await updateFirebaseCart(updatedCart);
+      }
+    } catch (error) {
+      setError('Failed to remove item. Please try again.');
+      console.error('Error removing item:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const updateQuantity = (productId, size, increment) => {
-    const updatedCart = cartItems
-      .map((item) => {
-        if (item.productId === productId && item.size === size) {
-          const newQuantity = item.quantity + increment;
-          if (newQuantity <= 0) {
-            return null;
+  const updateQuantity = async (productId, size, increment) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedCart = cartItems
+        .map((item) => {
+          if (item.productId === productId && item.size === size) {
+            const newQuantity = Math.min(Math.max(item.quantity + increment, 1), MAX_QUANTITY);
+            return { ...item, quantity: newQuantity };
           }
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      })
-      .filter(Boolean);
+          return item;
+        })
+        .filter(Boolean);
 
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    if (auth.currentUser) {
-      updateFirebaseCart(updatedCart);
+      setCartItems(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      if (auth.currentUser) {
+        await updateFirebaseCart(updatedCart);
+      }
+    } catch (error) {
+      setError('Failed to update quantity. Please try again.');
+      console.error('Error updating quantity:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,7 +128,7 @@ const Cart = ({ username, setUsername }) => {
       const userCartRef = doc(db, 'carts', auth.currentUser.uid);
       await setDoc(userCartRef, { items: updatedCart }, { merge: true });
     } catch (error) {
-      console.error('Error updating Firebase cart:', error.message);
+      throw new Error('Failed to update cart in database');
     }
   };
 
@@ -137,6 +141,24 @@ const Cart = ({ username, setUsername }) => {
   const checkoutPayment = (totalCost) => {
     navigate('/checkout', { state: { totalCost, items: cartItems } });
   };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading your cart...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <p className="error-message">{error}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -189,7 +211,8 @@ const Cart = ({ username, setUsername }) => {
                         <p>{item.quantity}</p>
                         <button
                           onClick={() => updateQuantity(item.productId, item.size, 1)}
-                          className="quantity-button plus"
+                          disabled={item.quantity === MAX_QUANTITY}
+                          className={`quantity-button plus ${item.quantity === MAX_QUANTITY ? 'disabled' : ''}`}
                         >
                           +
                         </button>

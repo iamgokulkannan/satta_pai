@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './navBar.css';
 import { assets } from '../assets/images/assets'; // Adjust the import as needed
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import SearchBar from './SearchBar';
 
 const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,8 +15,35 @@ const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false); // Track dropdown visibility
+  const [isAdmin, setIsAdmin] = useState(false);
+  const dropdownRef = useRef(null); // Add ref for dropdown menu
 
   const auth = getAuth();
+  const db = getFirestore();
+
+  // Add useEffect for handling dropdown hover behavior
+  useEffect(() => {
+    const handleMouseEnter = () => {
+      setShowDropdown(true);
+    };
+    
+    const handleMouseLeave = () => {
+      setShowDropdown(false);
+    };
+    
+    const dropdownElement = dropdownRef.current;
+    if (dropdownElement) {
+      dropdownElement.addEventListener('mouseenter', handleMouseEnter);
+      dropdownElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+    
+    return () => {
+      if (dropdownElement) {
+        dropdownElement.removeEventListener('mouseenter', handleMouseEnter);
+        dropdownElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
 
   // Handle scroll and hover effects
   useEffect(() => {
@@ -39,8 +67,18 @@ const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
       setIsVisible(true);
     }
 
+    // Prevent scroll on search focus
+    const preventScrollOnSearch = (e) => {
+      if (e.target.closest('.search-container')) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('focusin', preventScrollOnSearch, true);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('focusin', preventScrollOnSearch, true);
     };
   }, [disableScrollEffect]);
 
@@ -50,22 +88,29 @@ const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
     setCartCount(totalQuantity);
   
     // Listen for user authentication state changes
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsLoggedIn(true);
-        setUsername( username || user.displayName || user.email.split('@')[0]); // Use display name or part of email
+        setUsername(username || user.displayName || user.email.split('@')[0]);
+        
+        // Check if user is admin
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists() && userDoc.data().isAdmin) {
+            setIsAdmin(true);
+          }
+        } catch (error) {
+          console.error('Error checking admin status:', error);
+        }
       } else {
         setIsLoggedIn(false);
+        setIsAdmin(false);
       }
     });
   
     return () => unsubscribe();
-  }, [auth, navigate, username, setUsername]);
+  }, [auth, navigate, username, setUsername, db]);
   
-  const handleClick = () => {
-    navigate('/');
-  };
-
   const cartClick = () => {
     navigate('/cart');
     window.scrollTo(0, 0);
@@ -77,6 +122,10 @@ const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
 
   const handleLogout = async () => {
     try {
+      // Clear local storage cart
+      localStorage.removeItem('cart');
+      
+      // Sign out from Firebase
       await signOut(auth);
       setIsLoggedIn(false);
       setUsername('');
@@ -85,52 +134,53 @@ const NavBar = ({ disableScrollEffect, username, setUsername, loading }) => {
       console.error('Error logging out:', error.message);
     }
   };
-
-  const profile = () =>{
-    navigate('/profile');
-    setShowDropdown(false);
-  }
-
-  const order = () =>{
-    navigate('/orders');
-    setShowDropdown(false);
-  }
   
   return (
     <nav className={`navbar ${isVisible ? 'visible' : ''}`}>
-      <a href="/" className="plus-contact-us">+</a>
-      <a href="/" className="contact-us">Contact Us</a>
-      <a href="/" className="nav-text-link">
-        <h1 ref={navTextRef} id="nav-text" className="nav-text" onClick={handleClick}>
-          Satta Pai
-        </h1>
-      </a>
-      <div className="icons">
-      {isLoggedIn ? (
-          <div 
-            className="user-menu"
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
-          >
-            <span className="greeting">
-              Hi, {username} <img src={assets.user_icon} alt="User Icon" />
-            </span>
-            {showDropdown && (
-              <div className="dropdown-menu">
-                <button onClick={() => profile()}>Profile</button>
-                <button onClick={() => order()}>My Orders</button>
-                <button onClick={handleLogout}>Logout</button>
+      <div className="nav-content">
+        <SearchBar />
+        <Link to="/" className="logo">
+          <img src={assets.logo} alt="Satta Pai" />
+        </Link>
+
+        <div className="nav-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/products/all" className="nav-link">Products</Link>
+          {isLoggedIn ? (
+            <div className="user-menu" ref={dropdownRef}>
+              <button
+                className="user-button"
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => {
+                  if (dropdownRef.current && !dropdownRef.current.contains(document.activeElement)) {
+                    setShowDropdown(false);
+                  }
+                }}
+              >
+                {username}
+              </button>
+              <div 
+                className={`dropdown-menu ${showDropdown ? '' : 'hidden'}`}
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
+              >
+                <Link to="/profile" className="dropdown-item">Profile</Link>
+                <Link to="/orders" className="dropdown-item">Orders</Link>
+                {isAdmin && (
+                  <Link to="/admin" className="dropdown-item">Admin Dashboard</Link>
+                )}
+                <button onClick={handleLogout} className="dropdown-item">
+                  Logout
+                </button>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className="profile" onClick={() => navigate('/login')}>
-            <img src={assets.user_icon} alt="User Icon" />
-          </div>
-        )}
-        <div className="cart-icon-container" onClick={cartClick}>
-          <img src={assets.cart_icon} alt="Cart Icon" />
-          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            </div>
+          ) : (
+            <Link to="/login" className="nav-link">Login</Link>
+          )}
+          <Link to="/cart" className="cart-link" onClick={cartClick}>
+            <img src={assets.cart} alt="Cart" />
+            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          </Link>
         </div>
       </div>
 

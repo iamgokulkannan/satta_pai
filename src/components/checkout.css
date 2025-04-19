@@ -80,3 +80,49 @@
       margin-bottom: 10px;
     }
   }
+
+  .payment-error {
+    background-color: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #d32f2f;
+  }
+
+  .payment-error p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+  }
+
+  .retry-button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+
+  .retry-button:hover {
+    background-color: #b71c1c;
+  }
+
+  .retry-button:disabled {
+    background-color: #ffcdd2;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .payment-error {
+      padding: 12px;
+      margin-bottom: 15px;
+    }
+
+    .retry-button {
+      width: 100%;
+      padding: 10px;
+    }
+  }

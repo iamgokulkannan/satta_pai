@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Import getAuth from firebase/auth
@@ -22,18 +22,18 @@ const CommentsPage = ({ username, setUsername }) => {
         window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
     }, []);
 
-    const fetchAllComments = async () => {
+    const fetchAllComments = useCallback(async () => {
         setLoading(true); // Set loading to true before fetching comments
         const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
         const querySnapshot = await getDocs(q);
         const fetchedComments = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setComments(fetchedComments.filter(comment => comment.productId === productId));
         setLoading(false); // Set loading to false after fetching comments
-    };
+    }, [productId]);
 
     useEffect(() => {
         fetchAllComments();
-    }, [productId]);
+    }, [fetchAllComments]);
 
     const handleEditComment = async (commentId, editedText, editedRating, editedPhotos) => {
         const updateData = { text: editedText, rating: editedRating, photos: editedPhotos };

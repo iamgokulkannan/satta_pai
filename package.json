@@ -1,41 +1,66 @@
 {
-  "name": "satta_pai",
-  "version": "0.1.0",
+  "name": "satta-pai",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "assert": "^2.1.0",
-    "axios": "^1.7.9",
-    "body-parser": "^1.20.3",
-    "buffer": "^6.0.3",
-    "chart.js": "^4.4.8",
-    "cors": "^2.8.5",
-    "cra-template": "1.2.0",
-    "crypto-browserify": "^3.12.1",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "firebase": "^11.2.0",
-    "https-browserify": "^1.0.0",
-    "lenis": "^1.1.20",
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1",
-    "process": "^0.11.10",
-    "querystring-es3": "^0.2.1",
-    "react": "^19.0.0",
-    "react-chartjs-2": "^5.3.0",
-    "react-csv": "^2.2.2",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.2",
+    "chart.js": "^4.4.0",
+    "date-fns": "^2.30.0",
+    "dompurify": "^3.2.5",
+    "firebase": "^10.7.0",
+    "i18next": "^23.7.6",
+    "jwt-decode": "^4.0.0",
+    "lenis": "^1.2.3",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.24.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.11",
+    "react-hook-form": "^7.48.2",
+    "react-i18next": "^13.5.0",
+    "react-intersection-observer": "^9.5.3",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.20.0",
     "react-scripts": "5.0.1",
-    "stream-browserify": "^3.0.0",
-    "twilio": "^5.4.2",
-    "url": "^0.11.4",
-    "util": "^0.12.5"
+    "react-select": "^5.8.0",
+    "react-table": "^7.8.0",
+    "react-toastify": "^9.1.3",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^13.6.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.1.0",
+    "msw": "^1.3.2",
+    "prettier": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "lint:fix": "eslint src/**/*.{js,jsx} --fix",
+    "format": "prettier --write src/**/*.{js,jsx,css,scss}",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +78,15 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,scss}": [
+      "prettier --write"
     ]
   }
 }

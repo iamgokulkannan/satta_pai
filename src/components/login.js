@@ -22,13 +22,16 @@ const auth = getAuth(app);
 const db = getFirestore();
 const googleProvider = new GoogleAuthProvider();
 
+// Configure Google provider with proper scopes
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
 
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,28 +48,35 @@ const Login = () => {
     };
 
     const handleGoogleSignIn = async () => {
-            setLoading(true);
-            setError('');
-            
-            try {
-                const result = await signInWithPopup(auth, googleProvider);
-                const user = result.user;
+        setError('');
         
-                await setDoc(doc(db, 'users', user.uid), {
-                    username: user.displayName || '',
-                    email: user.email,
-                    phone: user.phoneNumber || '',
-                    uid: user.uid,
-                }, { merge: true });
-        
-                // alert('Signed in with Google!');
-                navigate('/');
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
+        try {
+            console.log('Starting Google sign-in process...');
+            const result = await signInWithPopup(auth, googleProvider);
+            console.log('Google sign-in successful:', result);
+            const user = result.user;
+    
+            await setDoc(doc(db, 'users', user.uid), {
+                username: user.displayName || '',
+                email: user.email,
+                phone: user.phoneNumber || '',
+                uid: user.uid,
+            }, { merge: true });
+    
+            navigate('/');
+        } catch (error) {
+            console.error('Google sign-in error:', error);
+            // Handle popup cancellation specifically
+            if (error.code === 'auth/cancelled-popup-request' || error.code === 'auth/popup-closed-by-user') {
+                // User closed the popup, no need to show error
+                console.log('User closed the popup');
+                return;
             }
-        };
+            // For other errors, show the error message
+            setError(error.message);
+            alert(`Error signing in with Google: ${error.message}`);
+        }
+    };
 
     const goToNavigate =() =>{
         navigate('/signup');

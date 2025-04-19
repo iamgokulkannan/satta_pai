@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { convertImageToBase64 } from '../../utils/imageUtils';
 import './ProductsManagement.css';
 
 const ProductsManagement = () => {
@@ -14,7 +13,11 @@ const ProductsManagement = () => {
         price: '',
         category: '',
         subCategory: '',
-        image: null
+        image: '',
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: ''
     });
 
     useEffect(() => {
@@ -37,18 +40,6 @@ const ProductsManagement = () => {
         }
     };
 
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            try {
-                const base64Image = await convertImageToBase64(URL.createObjectURL(file));
-                setNewProduct({ ...newProduct, image: base64Image });
-            } catch (error) {
-                setError('Failed to process image');
-            }
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -65,7 +56,11 @@ const ProductsManagement = () => {
                 price: '',
                 category: '',
                 subCategory: '',
-                image: null
+                image: '',
+                option1: '',
+                option2: '',
+                option3: '',
+                option4: ''
             });
             fetchProducts();
         } catch (error) {
@@ -117,13 +112,16 @@ const ProductsManagement = () => {
                     onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
                     required
                 />
-                <input
-                    type="text"
-                    placeholder="Category"
+                <select
                     value={newProduct.category}
                     onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
                     required
-                />
+                >
+                    <option value="">Select Category</option>
+                    <option value="Hoodie">Hoodie</option>
+                    <option value="T-Shirt">T-Shirt</option>
+                    <option value="Oversized Tee">Oversized Tee</option>
+                </select>
                 <input
                     type="text"
                     placeholder="Sub Category"
@@ -132,10 +130,35 @@ const ProductsManagement = () => {
                     required
                 />
                 <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
+                    type="text"
+                    placeholder="Main Image Google Drive Link"
+                    value={newProduct.image}
+                    onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
                     required
+                />
+                <input
+                    type="text"
+                    placeholder="Option 1 Image Google Drive Link"
+                    value={newProduct.option1}
+                    onChange={(e) => setNewProduct({ ...newProduct, option1: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Option 2 Image Google Drive Link"
+                    value={newProduct.option2}
+                    onChange={(e) => setNewProduct({ ...newProduct, option2: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Option 3 Image Google Drive Link"
+                    value={newProduct.option3}
+                    onChange={(e) => setNewProduct({ ...newProduct, option3: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Option 4 Image Google Drive Link"
+                    value={newProduct.option4}
+                    onChange={(e) => setNewProduct({ ...newProduct, option4: e.target.value })}
                 />
                 <button type="submit">Add Product</button>
             </form>

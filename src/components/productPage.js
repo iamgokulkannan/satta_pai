@@ -18,7 +18,9 @@ const ProductPage = ( {username , setUsername} ) => {
     });
   
     useEffect(() => {
-      const filtered = products.filter((product) => product.subCategory === subCategory);
+      const filtered = subCategory.toLowerCase() === "all" 
+        ? products 
+        : products.filter((product) => product.subCategory.toLowerCase() === subCategory.toLowerCase());
       setFilteredProducts(filtered);
     }, [subCategory]);
   
@@ -31,7 +33,7 @@ const ProductPage = ( {username , setUsername} ) => {
   
       const filtered = products.filter((product) => {
         return (
-          product.subCategory === subCategory &&
+          (subCategory.toLowerCase() === "all" || product.subCategory.toLowerCase() === subCategory.toLowerCase()) &&
           (updatedFilters.composition === "All" || product.details.composition === updatedFilters.composition) &&
           (updatedFilters.size === "All" || product.sizes.includes(updatedFilters.size)) &&
           (updatedFilters.category === "All" || product.category === updatedFilters.category) &&
@@ -57,7 +59,7 @@ const ProductPage = ( {username , setUsername} ) => {
       <div>
         <NavBar disableScrollEffect={true} username={username} setUsername={setUsername} />
         <div className="product-page">
-          <h1>{subCategory}</h1>
+          <h1>{subCategory === "all" ? "All Products" : subCategory}</h1>
           <div className="filters">
             <label>Filter by Composition:</label>
             <select
@@ -106,31 +108,39 @@ const ProductPage = ( {username , setUsername} ) => {
             </select>
           </div>
   
-          <div className="product-grid">
-            {displayedProducts.map((product) => (
-              <div
-                key={product._id}
-                className="product-card"
-                onClick={() => handleImageClick(product._id)}
-              >
-                <img src={product.image} alt={product.name} />
-                <h3>{product.name}</h3>
-                <p>Rs. {product.discountedPrice}.00</p>
+          {filteredProducts.length === 0 ? (
+            <div className="no-products">
+              <p>No products found in this category.</p>
+            </div>
+          ) : (
+            <>
+              <div className="product-grid">
+                {displayedProducts.map((product) => (
+                  <div
+                    key={product._id}
+                    className="product-card"
+                    onClick={() => handleImageClick(product._id)}
+                  >
+                    <img src={product.image} alt={product.name} />
+                    <h3>{product.name}</h3>
+                    <p>Rs. {product.discountedPrice}.00</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
   
-          <div className="pagination">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                className={currentPage === index + 1 ? "active" : ""}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+              <div className="pagination">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    className={currentPage === index + 1 ? "active" : ""}
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <Footer />
       </div>
