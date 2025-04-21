@@ -1,4 +1,5 @@
 # Completed Tasks (***)
+
 # cart page - local storage ***
 # comments - add star rating and show only 5 comments ***
 # create comments page ***
@@ -82,5 +83,9 @@ Technical Debt:
     - Infinite scroll indexing issues
     - Forgot password page implementation
 
+#products added successfully , make it to retrive   !
+#Navbar overlapping productdetails page !
+
 # *** - Marked as done
 # * - Temporarily completed
+# ! important
