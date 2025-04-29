@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import './signup.css';
 import NavBar from './navBar';
 
+// Firebase configuration
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -15,17 +16,20 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase if it hasn't been initialized already
+// Initialize Firebase if not already initialized
 if (!getApps().length) {
     initializeApp(firebaseConfig);
 }
 
+// Firebase services
 const auth = getAuth();
 const db = getFirestore();
 const googleProvider = new GoogleAuthProvider();
 
 const Signup = () => {
     const navigate = useNavigate();
+
+    // State variables
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,55 +37,66 @@ const Signup = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // Handle form submission for email/password signup
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
-    
+
         try {
+            // Create user with email and password
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-    
+
             // Check if this is the first user (admin)
             const usersRef = collection(db, 'users');
             const usersSnapshot = await getDocs(usersRef);
             const isFirstUser = usersSnapshot.empty;
-    
+
+            // Save user data to Firestore
             await setDoc(doc(db, 'users', user.uid), {
                 username: username,
                 email: email,
                 phone: phone,
                 uid: user.uid,
-                isAdmin: isFirstUser // First user becomes admin
+                isAdmin: isFirstUser, // First user becomes admin
             });
-    
+
             alert('User signed up successfully!');
             navigate('/');
         } catch (error) {
+            console.error('Error during signup:', error);
             setError(error.message);
         } finally {
             setLoading(false);
         }
     };
 
+    // Handle Google Sign-In
     const handleGoogleSignIn = async () => {
         setLoading(true);
         setError('');
-        
+
         try {
+            // Sign in with Google
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
-    
-            await setDoc(doc(db, 'users', user.uid), {
-                username: user.displayName || '',
-                email: user.email,
-                phone: user.phoneNumber || '',
-                uid: user.uid,
-            }, { merge: true });
-    
-            // alert('Signed in with Google!');
+
+            // Save user data to Firestore
+            await setDoc(
+                doc(db, 'users', user.uid),
+                {
+                    username: user.displayName || '',
+                    email: user.email,
+                    phone: user.phoneNumber || '',
+                    uid: user.uid,
+                },
+                { merge: true } // Merge with existing data if any
+            );
+
             navigate('/');
         } catch (error) {
+            console.error('Error during Google Sign-In:', error);
             setError(error.message);
         } finally {
             setLoading(false);
