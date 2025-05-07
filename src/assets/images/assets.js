@@ -21,7 +21,7 @@ import option3 from './option3.png';
 import option4 from './option4.png';
 import tshirt from './tshirt.png';
 import user_icon from './user_icon.png';
-import cart_icon from './cart_icon.png';
+import cart from './cart_icon.png';
 import bin from './bin.png';
 import P1_Back from './P1-Back.png';
 import P1_CloseUp from './P1-CloseUp.png';
@@ -77,7 +77,7 @@ export const assets = {
     sweatshirt,
     tshirt,
     user_icon,
-    cart_icon,
+    cart,
     bin,
 };
 
