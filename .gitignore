@@ -30,3 +30,5 @@ userContext.js
 locahost.pem
 locahost-key.pem
 src/server.js
+# Local Netlify folder
+.netlify

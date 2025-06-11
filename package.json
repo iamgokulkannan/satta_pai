@@ -2,7 +2,7 @@
   "name": "satta-pai",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://iamgokulkannan.github.io/satta_pai",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
