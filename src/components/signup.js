@@ -78,11 +78,12 @@ const Signup = () => {
         setError('');
 
         try {
-            // Sign in with Google
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
 
-            // Save user data to Firestore
+            // Set the username state
+            setUsername(user.displayName || user.email.split('@')[0]);
+
             await setDoc(
                 doc(db, 'users', user.uid),
                 {
@@ -91,7 +92,7 @@ const Signup = () => {
                     phone: user.phoneNumber || '',
                     uid: user.uid,
                 },
-                { merge: true } // Merge with existing data if any
+                { merge: true }
             );
 
             navigate('/');
